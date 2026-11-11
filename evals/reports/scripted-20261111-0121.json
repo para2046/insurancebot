@@ -1,0 +1,763 @@
+[
+ {
+  "name": "demo_case_full_workflow",
+  "category": "demo",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "closed with email for CL-2048 | phase=CLOSED verified=True active=CL-2048 handoff_offered=False"
+   },
+   "reply0_mentions:CL-2048": {
+    "passed": true,
+    "detail": "expected one of ['CL-2048', 'January 12']"
+   },
+   "reply2_mentions:pathology": {
+    "passed": true,
+    "detail": "expected one of ['pathology']"
+   },
+   "reply3_mentions:portal": {
+    "passed": true,
+    "detail": "expected one of ['portal', 'upload']"
+   },
+   "reply4_mentions:less than a week": {
+    "passed": true,
+    "detail": "expected one of ['less than a week', 'within a week', 'a week']"
+   }
+  },
+  "judge": {
+   "pass": true,
+   "scores": {
+    "sop_adherence": 5,
+    "grounding": 5,
+    "naturalness": 5,
+    "empathy": 5,
+    "memory": 5
+   },
+   "issues": []
+  },
+  "transcript": [
+   [
+    "caller",
+    "I'm the policyholder. My name is Margaret Chen, policy POL-9921. I'm calling about my denied healthcare claim from January. DOB is 1985-03-15, SSN last four is 4472.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. I found a matching healthcare claim, case CL-2048, filed on January 12, 2026, and its status is denied. Can you confirm this is the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "Yes, that's it.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry\u2014that\u2019s frustrating news. The claim was denied because the review file did not include the pathology report and the treating provider\u2019s office note. Please use the member portal or claim upload link first if possible; make sure each file is complete and readable, with the relevant dates and provider or facility information visible. The appeal deadline was March 18, 2026, and has passed; I don\u2019t have information about late appeals, but a human claims representative can look into that with you. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "Why was it denied exactly?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "I understand why you want the exact reason. The claim was denied because the review file did not include the pathology report and the treating provider\u2019s office note. Is there anything else about this claim you\u2019d like to ask?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "How do I send the documents?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "The best starting point is usually the member portal or the claim upload link so the documents stay attached to claim CL-2048. Each file should be complete, legible, and show the relevant dates and issuing provider or facility; for medical claims, include the treating provider or facility name on each page when available. If online upload isn\u2019t available, support can help arrange fax or mail submission. Is there anything else about this claim I can help with?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "How long does it take after I send them?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "Once the missing files are received, the review usually restarts rather than finishing instantly. Processing is usually less than a week on average, although intake and another review cycle may still be needed before the status updates. If either document is incomplete or unclear, the team may ask for more information before reconsidering the denial. Is there anything else about this claim I can help with?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "No, that's all for today.",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "Before we finish, would you like me to email a summary of today\u2019s conversation\u2014including what we discussed, the claim status, and next steps\u2014to the email on file, m*******@email.com, or would you prefer to skip it?",
+    "POST_PROCESS",
+    true
+   ],
+   [
+    "caller",
+    "Yes, please email it.",
+    "POST_PROCESS",
+    true
+   ],
+   [
+    "agent",
+    "The summary email has been sent to m*******@email.com. Thank you for calling today, Margaret, and take care.",
+    "CLOSED",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "CLOSED",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "margaret chen",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": "denied",
+    "month": "January",
+    "year": null,
+    "case_id": null,
+    "intent": "general_claim_question",
+    "notes": [
+     "caller gave policy number POL-9921 (not a verification field)"
+    ]
+   },
+   "candidate_case_id": "CL-2048",
+   "active_case_id": "CL-2048",
+   "questions_asked": [
+    "Why was the claim denied exactly?",
+    "How can I send the missing documents for this claim?",
+    "How long will it take to process the claim after the documents are submitted?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": true,
+   "email_choice": "send",
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, status=denied, month=January, intent=denial_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-2048",
+    "[RESOLVE_INTENT] active case CL-2048 (intent=denial_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=document_submission",
+    "[PROCESS_CASE] remembered intent=general_claim_question",
+    "[PROCESS_CASE] caller done -> POST_PROCESS",
+    "[POST_PROCESS] offered email summary",
+    "[POST_PROCESS] summary emailed to m*******@email.com",
+    "[POST_PROCESS] -> CLOSED"
+   ]
+  },
+  "outbox": [
+   {
+    "to": "margaret@email.com",
+    "subject": "Summary of your claims call \u2013 CL-2048",
+    "body": "Hi Margaret,\n\nThank you for contacting claims support. Here is a summary of today's conversation.\n\nWHAT WE DISCUSSED\n  - You asked about the denial of your January healthcare claim, which is currently marked denied.\n  - You asked why the claim was denied, and we explained that the pathology report and treating provider\u2019s office note were missing from the review file.\n  - You asked how to submit the missing documents; we recommended using the member portal or claim upload link, with fax or mail as alternatives if online upload is unavailable.\n  - You asked how long review may take after submission; we explained that processing is usually less than a week on average, though intake and another review cycle may be needed.\n  - You asked about next steps after the appeal deadline passed, and we noted that a human claims representative can discuss whether late-appeal options are available.\n\nCLAIM STATUS\n  CL-2048 (healthcare, filed 2026-01-12): DENIED\n  Healthcare claim denied due to missing pathology report and office note.\n  Reason: the review file did not include the pathology report and the treating provider office note.\n\nNEXT STEPS\n  - Submit the pathology report via the member portal or claim upload link.\n  - Submit the office note via the member portal or claim upload link.\n  - After submission, review usually takes usually less than a week.\n  - The appeal deadline on file (2026-03-18) has passed; contact us if you'd like a claims representative to look into it.\n  - Reply to this email or call us if you have more questions.\n\nBest regards,\nClaims Support"
+   }
+  ]
+ },
+ {
+  "name": "caller_rejects_candidate",
+  "category": "resolve",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "switched to dental CL-1899 | phase=PROCESS_CASE verified=True active=CL-1899 handoff_offered=False"
+   },
+   "reply2_mentions:425": {
+    "passed": true,
+    "detail": "expected one of ['425']"
+   }
+  },
+  "judge": {
+   "pass": true,
+   "scores": {
+    "sop_adherence": 5,
+    "grounding": 5,
+    "naturalness": 5,
+    "empathy": 4,
+    "memory": 5
+   },
+   "issues": []
+  },
+  "transcript": [
+   [
+    "caller",
+    "I'm the policyholder. My name is Margaret Chen, policy POL-9921. I'm calling about my denied healthcare claim from January. DOB is 1985-03-15, SSN last four is 4472.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. I found a matching healthcare claim: case CL-2048, filed January 12, 2026, with a denied status. Can you confirm this is the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "No, actually I meant my dental claim.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "Thanks for clarifying the mix-up. Your dental claim is closed and completed: the insurance company paid $425, and the maximum allowed amount for the covered service was $450. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "Yes, how much did they pay?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "The insurance company paid $425 for the dental claim. Is there anything else you\u2019d like to know about this claim?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "margaret chen",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "dental",
+    "status": "closed",
+    "month": "November",
+    "year": "2025",
+    "case_id": "CL-1899",
+    "intent": "general_claim_question",
+    "notes": [
+     "caller gave policy number POL-9921 (not a verification field)"
+    ]
+   },
+   "candidate_case_id": null,
+   "active_case_id": "CL-1899",
+   "questions_asked": [
+    "How much did the insurance company pay for the dental claim?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, status=denied, month=January, intent=denial_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-2048",
+    "[RESOLVE_INTENT] remembered case_type=dental, status=closed, month=November, year=2025, case_id=CL-1899",
+    "[RESOLVE_INTENT] caller rejected CL-2048",
+    "[RESOLVE_INTENT] active case CL-1899 (intent=denial_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=general_claim_question"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "email_skip",
+  "category": "post",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "closed without email | phase=CLOSED verified=True active=CL-2048 handoff_offered=False"
+   }
+  },
+  "judge": {
+   "pass": true,
+   "scores": {
+    "sop_adherence": 5,
+    "grounding": 5,
+    "naturalness": 5,
+    "empathy": 5,
+    "memory": 5
+   },
+   "issues": []
+  },
+  "transcript": [
+   [
+    "caller",
+    "I'm the policyholder. My name is Margaret Chen, policy POL-9921. I'm calling about my denied healthcare claim from January. DOB is 1985-03-15, SSN last four is 4472.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. I found a matching healthcare claim: case CL-2048, filed January 12, 2026, and currently denied. Can you confirm this is the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "yes",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry\u2014that\u2019s frustrating news. Your healthcare claim was denied because the review file did not include the pathology report and treating provider office note. Please submit both documents, complete and readable, through the member portal or claim upload link when possible; include claim details, relevant dates, and the provider or facility name where available. The appeal deadline was March 18, 2026, and has passed, so I don\u2019t have information about late appeals, but a human claims representative can look into that with you. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "That's all, thanks.",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "You\u2019re welcome\u2014would you like us to email a summary of today\u2019s conversation, including what we discussed, the claim status, and next steps, to the email on file, or would you prefer to skip it?",
+    "POST_PROCESS",
+    true
+   ],
+   [
+    "caller",
+    "No need for the email.",
+    "POST_PROCESS",
+    true
+   ],
+   [
+    "agent",
+    "Thank you for letting me know. No email will be sent. I appreciate your calling today, Margaret, and hope you have a good day.",
+    "CLOSED",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "CLOSED",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "margaret chen",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": "denied",
+    "month": "January",
+    "year": "2026",
+    "case_id": "CL-2048",
+    "intent": "denial_question",
+    "notes": [
+     "caller gave policy number POL-9921 (not a verification field)"
+    ]
+   },
+   "candidate_case_id": "CL-2048",
+   "active_case_id": "CL-2048",
+   "questions_asked": [],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": true,
+   "email_choice": "skip",
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, status=denied, month=January, intent=denial_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-2048",
+    "[RESOLVE_INTENT] remembered year=2026, case_id=CL-2048",
+    "[RESOLVE_INTENT] active case CL-2048 (intent=denial_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] caller done -> POST_PROCESS",
+    "[POST_PROCESS] offered email summary",
+    "[POST_PROCESS] caller skipped the email summary",
+    "[POST_PROCESS] -> CLOSED"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "email_other_address",
+  "category": "post",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "never send to unverified address | phase=POST_PROCESS verified=True active=CL-2048 handoff_offered=False"
+   }
+  },
+  "judge": {
+   "pass": true,
+   "scores": {
+    "sop_adherence": 5,
+    "grounding": 5,
+    "naturalness": 5,
+    "empathy": 5,
+    "memory": 5
+   },
+   "issues": []
+  },
+  "transcript": [
+   [
+    "caller",
+    "I'm the policyholder. My name is Margaret Chen, policy POL-9921. I'm calling about my denied healthcare claim from January. DOB is 1985-03-15, SSN last four is 4472.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. I found the matching claim you described: case CL-2048, a healthcare claim filed on January 12, 2026, with a denied status. Is this the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "yes",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry\u2014that\u2019s frustrating news. Your healthcare claim was denied because the review file did not include the pathology report and treating provider\u2019s office note. Please submit complete, readable copies through the member portal or claim upload link when possible; include the claim details, relevant dates, and provider or facility name where available. The appeal deadline of March 18, 2026, has passed, and I don\u2019t have information about late appeals, but a human claims representative can look into that with you. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "Nothing else.",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "Before we finish, would you like us to email a summary of today\u2019s conversation\u2014including what we discussed, the claim status, and next steps\u2014to the email address on file, or would you prefer to skip it?",
+    "POST_PROCESS",
+    true
+   ],
+   [
+    "caller",
+    "Send it to my work email margaret.chen@work.com instead.",
+    "POST_PROCESS",
+    true
+   ],
+   [
+    "agent",
+    "For privacy, the summary can only be sent to the email address on file, m*******@email.com. A new email address can\u2019t be verified on this call. Would you like me to send it there, or skip the summary?",
+    "POST_PROCESS",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "POST_PROCESS",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "margaret chen",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": "denied",
+    "month": "January",
+    "year": "2026",
+    "case_id": "CL-2048",
+    "intent": "denial_question",
+    "notes": [
+     "caller gave policy number POL-9921 (not a verification field)"
+    ]
+   },
+   "candidate_case_id": "CL-2048",
+   "active_case_id": "CL-2048",
+   "questions_asked": [],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": true,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, status=denied, month=January, intent=denial_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-2048",
+    "[RESOLVE_INTENT] remembered year=2026, case_id=CL-2048",
+    "[RESOLVE_INTENT] active case CL-2048 (intent=denial_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] caller done -> POST_PROCESS",
+    "[POST_PROCESS] offered email summary",
+    "[POST_PROCESS] caller asked for a different address; only email on file allowed"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "question_after_email_offer",
+  "category": "post",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "returns to answer, then sends | phase=CLOSED verified=True active=CL-2048 handoff_offered=False"
+   }
+  },
+  "judge": {
+   "pass": true,
+   "scores": {
+    "sop_adherence": 5,
+    "grounding": 5,
+    "naturalness": 5,
+    "empathy": 5,
+    "memory": 5
+   },
+   "issues": []
+  },
+  "transcript": [
+   [
+    "caller",
+    "I'm the policyholder. My name is Margaret Chen, policy POL-9921. I'm calling about my denied healthcare claim from January. DOB is 1985-03-15, SSN last four is 4472.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. I found a matching healthcare claim, case CL-2048, filed on January 12, 2026, and its status is denied. Can you confirm this is the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "yes",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry\u2014that\u2019s frustrating news. The claim was denied because the review file did not include the pathology report and the treating provider\u2019s office note. Please submit both through the member portal or claim upload link first; make sure each file is complete and readable, with relevant dates and the provider or facility name visible when available. The appeal deadline was March 18, 2026, and has passed; I don\u2019t have information about late appeals, but a human claims representative can look into that with you. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "I'm done.",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "Understood\u2014before we finish, would you like me to email a summary of today\u2019s conversation, including what we discussed, the claim status, and next steps, to the email address on file, or would you prefer to skip it?",
+    "POST_PROCESS",
+    true
+   ],
+   [
+    "caller",
+    "Wait, actually, where do I upload the files?",
+    "POST_PROCESS",
+    true
+   ],
+   [
+    "agent",
+    "Please use the member portal or the claim upload link so the pathology report and office note stay attached to the claim. If online upload isn\u2019t available, support can help arrange fax or mail submission. Is there anything else you\u2019d like to ask about this claim? If you're all set, would you like the summary emailed to m*******@email.com, or skip it?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "OK done now. Yes send the email.",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "The summary email has been sent to m*******@email.com. Thank you for calling, Margaret, and take care.",
+    "CLOSED",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "CLOSED",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "margaret chen",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": "denied",
+    "month": "January",
+    "year": "2026",
+    "case_id": "CL-2048",
+    "intent": "document_submission",
+    "notes": [
+     "caller gave policy number POL-9921 (not a verification field)"
+    ]
+   },
+   "candidate_case_id": "CL-2048",
+   "active_case_id": "CL-2048",
+   "questions_asked": [
+    "Where can I upload the files?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": true,
+   "email_choice": "send",
+   "email_pref": "send",
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-2048",
+    "[RESOLVE_INTENT] remembered year=2026, case_id=CL-2048",
+    "[RESOLVE_INTENT] active case CL-2048 (intent=denial_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] caller done -> POST_PROCESS",
+    "[POST_PROCESS] offered email summary",
+    "[POST_PROCESS] remembered intent=document_submission",
+    "[POST_PROCESS] caller has another question -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered email_pref=send",
+    "[PROCESS_CASE] caller done -> POST_PROCESS",
+    "[POST_PROCESS] summary emailed to m*******@email.com",
+    "[POST_PROCESS] -> CLOSED"
+   ]
+  },
+  "outbox": [
+   {
+    "to": "margaret@email.com",
+    "subject": "Summary of your claims call \u2013 CL-2048",
+    "body": "Hi Margaret,\n\nThank you for contacting claims support. Here is a summary of today's conversation.\n\nWHAT WE DISCUSSED\n  - You asked about the status of your January healthcare claim, which was denied.\n  - You asked why the claim was denied; the review file was missing the pathology report and treating provider\u2019s office note.\n  - You asked where to upload the documents; you can use the member portal or claim upload link, or contact support about fax or mail submission.\n  - You were informed that the appeal deadline has passed, and a human claims representative can discuss whether a late appeal may be possible.\n\nCLAIM STATUS\n  CL-2048 (healthcare, filed 2026-01-12): DENIED\n  Healthcare claim denied due to missing pathology report and office note.\n  Reason: the review file did not include the pathology report and the treating provider office note.\n\nNEXT STEPS\n  - Submit the pathology report via the member portal or claim upload link.\n  - Submit the office note via the member portal or claim upload link.\n  - After submission, review usually takes usually less than a week.\n  - The appeal deadline on file (2026-03-18) has passed; contact us if you'd like a claims representative to look into it.\n  - Reply to this email or call us if you have more questions.\n\nBest regards,\nClaims Support"
+   }
+  ]
+ }
+]

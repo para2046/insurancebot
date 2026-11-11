@@ -1,0 +1,177 @@
+[
+ {
+  "name": "29_claim_P12_CL-3001_docs_how",
+  "category": "claim",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "verified, worked CL-3001, email=send | phase=CLOSED verified=True active=CL-3001 outbox=1"
+   },
+   "mentions_grounded_answer": {
+    "passed": true,
+    "detail": "expected one of ['portal', 'upload']"
+   }
+  },
+  "judge": {
+   "pass": true,
+   "scores": {
+    "sop_adherence": 5,
+    "grounding": 5,
+    "naturalness": 5,
+    "empathy": 4,
+    "memory": 5
+   },
+   "issues": []
+  },
+  "transcript": [
+   [
+    "caller",
+    "I\u2019m calling about my healthcare claim from March 2026\u2014it was denied, and I need to know how and where to submit the missing documents. What format do you require?",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "I\u2019ve noted that you\u2019re calling about submitting documents for your healthcare claim. I can go over those questions right after we verify your identity, which protects your private health and financial information. Please provide your full name and either your date of birth or the email address on file.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "caller",
+    "My name is Ma Tian, and the email on file is matian@example.com.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you for providing those details. Please provide one more verification detail: your date of birth, the phone number on file, or the last four digits of your SSN or national ID.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "caller",
+    "The phone number on file is +16502088799. Now, where exactly do I submit the missing documents, and what format do you accept?",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Ma. I found the matching healthcare claim: case CL-3001, filed March 1, 2026, and currently denied. Can you confirm this is the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "Yes, that\u2019s the one\u2014case CL-3001 from March 1, 2026. Please tell me where I should submit the missing documents and which file formats you accept.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "Start with the member portal or claim upload link so the diagnosis report stays attached to case CL-3001. If online upload isn\u2019t available, support can help arrange fax or mail submission. No specific file format is listed; the document should be clear, complete, and easy to review. Is there anything else you\u2019d like to ask about this claim?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "Yes\u2014please confirm whether PDF or image files such as JPG/PNG are acceptable, and whether there\u2019s a file-size limit. Also, could you send me an email summary of these submission instructions?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "I don\u2019t have information confirming whether PDF, JPG, or PNG files are accepted, or whether there\u2019s a file-size limit. A human claims representative can look into those upload requirements. I\u2019ll send an email summary to the address on file as soon as your questions are wrapped up. Is there anything else on this claim you\u2019d like to ask?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "No, that covers everything. Please send the email summary to the address on file, and thank you.",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "The summary email has been sent to m*****@example.com. Thank you for contacting us, and take care.",
+    "CLOSED",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "CLOSED",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "ma tian",
+    "email": "matian@example.com",
+    "phone": "\u2022\u2022\u202299"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P12",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": "denied",
+    "month": "March",
+    "year": "2026",
+    "case_id": "CL-3001",
+    "intent": "document_submission",
+    "notes": [],
+    "acknowledged": true
+   },
+   "candidate_case_id": "CL-3001",
+   "active_case_id": "CL-3001",
+   "questions_asked": [
+    "Where should I submit the missing documents, and which file formats are accepted?",
+    "Are PDF, JPG, or PNG files acceptable, and is there a file-size limit?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": "send",
+   "email_pref": "send",
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, status=denied, month=March, year=2026, intent=document_submission",
+    "[VERIFY_ID] received full_name, email",
+    "[VERIFY_ID] received phone",
+    "[VERIFY_ID] verified party P12 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-3001",
+    "[RESOLVE_INTENT] remembered case_id=CL-3001",
+    "[RESOLVE_INTENT] active case CL-3001 (intent=document_submission) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered email_pref=send",
+    "[PROCESS_CASE] caller asked for the email summary; will send when done",
+    "[PROCESS_CASE] caller done -> POST_PROCESS",
+    "[POST_PROCESS] summary emailed to m*****@example.com",
+    "[POST_PROCESS] -> CLOSED"
+   ]
+  },
+  "outbox": [
+   {
+    "to": "matian@example.com",
+    "subject": "Summary of your claims call \u2013 CL-3001",
+    "body": "Hi Ma,\n\nThank you for contacting claims support. Here is a summary of today's conversation.\n\nWHAT WE DISCUSSED\n  - You asked about a denied healthcare claim from March 2026 and how to submit missing documents.\n  - You asked whether to use the member portal or claim upload link, with fax or mail as alternatives if online upload is unavailable.\n  - You asked which file formats are accepted and whether there is a file-size limit.\n  - You were advised that no specific format or size limit was confirmed and that a claims representative can clarify those requirements.\n  - You asked for an email summary of the submission instructions to be sent to the address on file.\n\nCLAIM STATUS\n  CL-3001 (healthcare, filed 2026-03-01): DENIED\n  Healthcare claim denied because the diagnosis report is missing.\n  Reason: the submitted materials did not include the treating provider diagnosis report.\n\nNEXT STEPS\n  - Submit the diagnosis report via the member portal or claim upload link.\n  - After submission, review usually takes usually less than a week.\n  - The appeal deadline on file (2026-04-15) has passed; contact us if you'd like a claims representative to look into it.\n  - Reply to this email or call us if you have more questions.\n\nBest regards,\nClaims Support"
+   }
+  ]
+ }
+]

@@ -1,0 +1,4 @@
+gradio==6.31.0
+openai==3.49.0
+python-dotenv==1.2.4
+pytest

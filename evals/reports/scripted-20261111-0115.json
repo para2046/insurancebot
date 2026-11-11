@@ -1,0 +1,125 @@
+[
+ {
+  "name": "deadline_passed_honesty",
+  "category": "process",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "reply2_mentions:passed": {
+    "passed": true,
+    "detail": "expected one of ['passed', 'has passed', 'past', 'deadline was', \"don't have information\"]"
+   }
+  },
+  "judge": {
+   "pass": true,
+   "scores": {
+    "sop_adherence": 5,
+    "grounding": 5,
+    "naturalness": 5,
+    "empathy": 5,
+    "memory": 5
+   },
+   "issues": []
+  },
+  "transcript": [
+   [
+    "caller",
+    "I'm the policyholder. My name is Margaret Chen, policy POL-9921. I'm calling about my denied healthcare claim from January. DOB is 1985-03-15, SSN last four is 4472.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. I found a matching healthcare claim: case CL-2048, filed January 12, 2026, and currently denied. Can you confirm this is the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "yes",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry this is frustrating news. The healthcare claim was denied because the review file did not include the pathology report and the treating provider\u2019s office note. Please submit both through the member portal or claim upload link if possible; make sure they\u2019re complete and readable, with the relevant dates and provider or facility information visible. The appeal deadline was March 18, 2026, and has passed, so I don\u2019t have information about late appeals, but a human claims representative can look into that with you. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "Can I still appeal?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "The appeal deadline for this claim was March 18, 2026, and it has passed. I don\u2019t have information about whether a late appeal is available, but a human claims representative can look into it with you. Is there anything else about this claim you\u2019d like to ask?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "margaret chen",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": "denied",
+    "month": "January",
+    "year": "2026",
+    "case_id": "CL-2048",
+    "intent": "denial_question",
+    "notes": [
+     "caller gave policy number POL-9921 (not a verification field)"
+    ]
+   },
+   "candidate_case_id": "CL-2048",
+   "active_case_id": "CL-2048",
+   "questions_asked": [
+    "Can I still appeal the denied claim?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, status=denied, month=January, intent=denial_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-2048",
+    "[RESOLVE_INTENT] remembered year=2026, case_id=CL-2048",
+    "[RESOLVE_INTENT] active case CL-2048 (intent=denial_question) -> PROCESS_CASE"
+   ]
+  },
+  "outbox": []
+ }
+]
