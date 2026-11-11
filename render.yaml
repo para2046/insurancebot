@@ -1,0 +1,15 @@
+# Render Blueprint: deploys the Gradio demo from the Dockerfile.
+# Render injects PORT; app.py binds to it.
+services:
+  - type: web
+    name: insurancebot
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: OPENROUTER_API_KEY
+        sync: false          # Render asks for the value when you create the Blueprint; never stored in git
+      - key: MODEL
+        value: openai/gpt-5.6-luna
