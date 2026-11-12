@@ -314,3 +314,19 @@ def test_switch_when_caller_describes_other_claim():
     s, _ = run([MARGARET_OPENING, {"confirmation": "yes"},
                 {"claim_selection": "CL-2102", "case_hints": {"case_type": "auto"}, "question": "and my auto claim?"}])
     assert s.active_case_id == "CL-2102"
+
+
+def test_rep_name_not_overwritten_by_shorter_form():
+    s, _ = run([{"caller_role": "representative", "rep_name": "David Chen", "pii": {"full_name": "Margaret Chen"}},
+                {"rep_name": "David", "rep_relationship": "mother",
+                 "pii": {"dob": "1985-03-15", "phone": "+16505212836"}},
+                {}])
+    assert s.rep_name == "David Chen" and s.rep_authorized and s.verified
+
+
+def test_rep_matching_rules():
+    store = Store()
+    assert store.authorized_rep("P9", "David Chen") and store.authorized_rep("P9", "David")
+    assert store.authorized_rep("P9", "David Chen (son)")
+    assert not store.authorized_rep("P9", "Chen") and not store.authorized_rep("P9", "Kevin Chen")
+    assert not store.authorized_rep("P12", "David Chen")

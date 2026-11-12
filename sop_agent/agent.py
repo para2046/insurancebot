@@ -11,7 +11,7 @@ import json
 import re
 
 from . import config
-from .data import PII_FIELDS, PII_LABELS, Store, is_complete, mask_email, normalize_pii
+from .data import PII_FIELDS, PII_LABELS, Store, is_complete, mask_email, name_tokens, normalize_pii
 from .extract import extract
 from .state import (CLOSED, HANDOFF, POST_PROCESS, PROCESS_CASE, RESOLVE_INTENT, VERIFY_ID, Session)
 
@@ -214,10 +214,13 @@ class Agent:
                 s.refused_fields.append(f)
         if ex["caller_role"] == "representative":
             s.caller_role = "representative"
-        if ex["rep_name"]:
+        new_rep = ex["rep_name"]
+        if new_rep and name_tokens(new_rep) != name_tokens(s.collected.get("full_name", "")):
             s.caller_role = "representative"
-            s.rep_name = ex["rep_name"]
-        if ex["rep_relationship"]:
+            # later turns sometimes repeat a shorter form ("David"): keep the most complete name given
+            if not s.rep_name or len(name_tokens(new_rep)) > len(name_tokens(s.rep_name)):
+                s.rep_name = new_rep
+        if ex["rep_relationship"] and not s.rep_relationship:
             s.rep_relationship = ex["rep_relationship"]
         if new_fields:
             s.log(f"[VERIFY_ID] received {', '.join(new_fields)}")

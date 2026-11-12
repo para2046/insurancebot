@@ -134,9 +134,13 @@ class Store:
         return next((p for p in self.policyholders if p["party_id"] == party_id), None)
 
     def authorized_rep(self, party_id: str, rep_name: str) -> dict | None:
-        target = name_tokens(rep_name)
+        given = set(name_tokens(rep_name))
         for rep in self.representatives:
-            if rep["buyer_party_id"] == party_id and sorted(name_tokens(rep["rep_name"])) == sorted(target):
+            if rep["buyer_party_id"] != party_id:
+                continue
+            listed = name_tokens(rep["rep_name"])
+            # full match, or first name only (policyholder consent is still required afterwards)
+            if set(listed) <= given or (given and given <= set(listed) and listed[0] in given):
                 return rep
         return None
 
