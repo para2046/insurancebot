@@ -299,3 +299,18 @@ def test_done_with_trailing_question_still_sends_email():
     s, llm = run([MARGARET_OPENING, {"confirmation": "yes"},
                   {"done_with_questions": True, "email_choice": "send", "question": "are PDFs accepted?"}])
     assert s.phase == CLOSED and len(s.outbox) == 1 and "briefly address" in llm.prompts[-1]
+
+
+def test_no_switch_to_claim_the_caller_did_not_describe():
+    # extractor misled by our own reply picks CL-2048 while caller just asks "what's the status?"
+    s, llm = run([{"pii": MARGARET_OPENING["pii"], "case_hints": {"case_type": "dental"}},
+                  {"confirmation": "yes"},
+                  {"claim_selection": "CL-2048", "question": "what's the status?"}])
+    assert s.active_case_id == "CL-1899"
+    assert "status: CLOSED" in llm.prompts[-1] and "net_pay" in llm.prompts[1]
+
+
+def test_switch_when_caller_describes_other_claim():
+    s, _ = run([MARGARET_OPENING, {"confirmation": "yes"},
+                {"claim_selection": "CL-2102", "case_hints": {"case_type": "auto"}, "question": "and my auto claim?"}])
+    assert s.active_case_id == "CL-2102"

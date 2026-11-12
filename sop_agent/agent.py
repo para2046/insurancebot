@@ -385,6 +385,19 @@ class Agent:
         no_hints = not any(mem.get(k) for k in ("case_type", "status", "month", "year"))
         return no_hints or scores[case_id] == best   # ties allowed: the caller's words may break them
 
+    def _caller_described(self, case_id: str, ex: dict, text: str) -> bool:
+        """Mid-case switch only if THIS message names the claim or describes it better than any other claim
+        (the extractor can otherwise be misled by our own previous reply)."""
+        if case_id.lower() in text.lower():
+            return True
+        hints = {k: v for k, v in (ex.get("case_hints") or {}).items() if v and k != "case_id"}
+        if not hints:
+            return False
+        claims = self.store.claims_for(self.store.claim_party(case_id))
+        scores = {c["case_id"]: self._score(c, hints) for c in claims}
+        best = max(scores.values())
+        return best > 0 and scores[case_id] == best and list(scores.values()).count(best) == 1
+
     def _resolve(self, s: Session, ex: dict, text: str, t: Turn, entering: bool = False) -> None:
         claims = self.store.claims_for(s.party_id)
         if not claims:
@@ -444,11 +457,12 @@ class Agent:
     def _process(self, s: Session, ex: dict, text: str, t: Turn, entering: bool = False) -> None:
         if not entering:
             selection = (ex.get("claim_selection") or "").upper()
-            if selection and selection != s.active_case_id and self.store.claim(s.party_id, selection):
+            if (selection and selection != s.active_case_id and self.store.claim(s.party_id, selection)
+                    and self._caller_described(selection, ex, text)):
                 s.active_case_id = selection
                 s.log(f"[PROCESS_CASE] switched to {selection}")
                 t.say(f"Acknowledge switching to claim {selection} and give a brief overview of it: status, "
-                      "summary, and the key amounts (explained with field_meanings).")
+                      "summary, and the key amounts in plain words.")
             elif ex.get("done_with_questions") or (ex.get("email_choice") and not ex.get("question")):
                 s.phase = POST_PROCESS
                 s.log("[PROCESS_CASE] caller done -> POST_PROCESS")
@@ -460,20 +474,29 @@ class Agent:
 
         claim = self.store.claim(s.party_id, s.active_case_id)
         t.facts["active_claim"] = self.store.claim_facts(claim, config.today(), text)
-        t.facts["other_claims_on_file"] = [self._claim_brief(c) for c in self.store.claims_for(s.party_id)
-                                           if c["case_id"] != claim["case_id"]]
+        t.facts["other_claims_on_file (NOT the claim being discussed; only for switching)"] = [
+            {k: c[k] for k in ("case_id", "case_type", "created_at", "status")}
+            for c in self.store.claims_for(s.party_id) if c["case_id"] != claim["case_id"]]
         if s.memory["notes"]:
             t.facts["caller_notes_from_earlier"] = s.memory["notes"]
         intent = ex.get("intent") or s.memory.get("intent") or "general_claim_question"
         if ex.get("question"):
             s.questions_asked.append(ex["question"])
 
+        t.say(f"The claim being discussed is {claim['case_id']} ({claim['case_type']}, filed {claim['created_at']}, "
+              f"status: {claim['status'].upper()}). Describe ONLY this claim, using active_claim facts.")
         if entering and not ex.get("question"):
-            t.say(f"The claim is confirmed. Address the caller's remembered intent ({intent}) right away without "
-                  "asking them to repeat it: give the status and key facts. For a denial: briefly acknowledge that "
-                  "it's frustrating news, give the denial reason in plain words, which documents are needed and the "
-                  "easiest way to submit them (general_submission_guidance), and the appeal_deadline_status. For "
-                  "other claims: status, summary and key amounts. Then ask what else they'd like to know.")
+            overview = {
+                "denied": "briefly acknowledge that it's frustrating news, give the denial reason in plain words, "
+                          "which documents are needed and the easiest way to submit them "
+                          "(general_submission_guidance), and the appeal_deadline_status",
+                "closed": "say it is closed/completed, give its summary, and what was paid (net_pay) versus the "
+                          "allowed maximum, in plain words",
+                "open": "say it is still open/in progress, give its summary and the expected reimbursement amount, "
+                        "in plain words",
+            }.get(claim["status"], "give its status and summary")
+            t.say(f"Address the caller's remembered intent ({intent}) right away without asking them to repeat it: "
+                  f"{overview}. Then ask what else they'd like to know.")
         else:
             t.say("Answer the caller's question naturally, using ONLY ALLOWED_FACTS. Prefer followup_guidance "
                   "entries where matches_current_question is true; for document questions use the per-document "

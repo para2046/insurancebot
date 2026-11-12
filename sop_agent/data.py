@@ -145,6 +145,9 @@ class Store:
         return sorted((c for c in self.claims if c["party_id"] == party_id),
                       key=lambda c: c["created_at"], reverse=True)
 
+    def claim_party(self, case_id: str) -> str | None:
+        return next((c["party_id"] for c in self.claims if c["case_id"] == case_id), None)
+
     def claim(self, party_id: str, case_id: str) -> dict | None:
         return next((c for c in self.claims_for(party_id) if c["case_id"] == (case_id or "").upper()), None)
 
