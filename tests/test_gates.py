@@ -200,7 +200,7 @@ def test_policyholder_without_claims_is_told_so():
 def test_partial_answers_are_clarified_not_counted_as_failures():
     s, llm = run([{"pii": {"full_name": "Margaret", "dob": "March 1985", "id_last4": "44"}}])
     assert s.collected == {} and s.verify_failures == 0
-    assert "incomplete or unclear" in llm.prompts[-1]
+    assert "wrongly formatted" in llm.prompts[-1]
 
 
 def test_refused_field_can_still_be_given_later():
@@ -330,3 +330,17 @@ def test_rep_matching_rules():
     assert store.authorized_rep("P9", "David Chen (son)")
     assert not store.authorized_rep("P9", "Chen") and not store.authorized_rep("P9", "Kevin Chen")
     assert not store.authorized_rep("P12", "David Chen")
+
+
+def test_malformed_phone_is_flagged_even_when_other_details_fail():
+    # unknown person: name + email + 12-digit phone; email/name don't match anyone, phone is malformed
+    s, llm = run([{"pii": {"full_name": "Pretty Smart", "email": "prettysmart@gmail.com", "id_last4": "3351",
+                           "phone": "178623542311"}}])
+    assert not s.verified and s.verify_failures == 1 and "phone" not in s.collected
+    prompt = llm.prompts[-1]
+    assert "wrongly formatted" in prompt and "phone number on file" in prompt.split("wrongly formatted")[1][:200]
+
+
+def test_full_id_number_gets_privacy_reminder():
+    s, llm = run([{"pii": {"full_name": "Margaret Chen", "id_last4": "178623544472"}}])
+    assert s.collected["id_last4"] == "4472" and "only the last 4 digits" in llm.prompts[-1]

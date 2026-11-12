@@ -246,14 +246,26 @@ class Agent:
             t.require(*HUMAN_OFFER)
             return
 
+        raw_id = re.sub(r"\D", "", ex["pii"].get("id_last4") or "")
+        if len(raw_id) > 4:
+            s.log("[VERIFY_ID] caller shared more than the last 4 ID digits; reminded them")
+            t.say("They typed more than the last 4 digits of their ID. Politely note that only the last 4 digits "
+                  "are ever needed and they shouldn't share full ID numbers (you used only the last 4).")
+        if partial:
+            t.say("Point out that these details look incomplete or wrongly formatted, so they weren't used: "
+                  + ", ".join(PII_LABELS[f] for f in partial)
+                  + ". Ask for the complete value (full first and last name; full date of birth with day, month and "
+                    "year; a 10-digit US phone number; a full email address; exactly the last 4 digits). This is a "
+                    "format issue only — don't imply anything about whether it matches our records.")
+
         if new_fields and len(s.collected) >= config.MIN_VERIFIED_FIELDS:
             s.verify_failures += 1
             s.log(f"[VERIFY_ID] verification failed (attempt {s.verify_failures})")
             if s.verify_failures >= config.MAX_VERIFY_FAILURES:
                 return self._handoff(s, t, "identity could not be verified after several attempts")
-            t.say("The details given don't match our records as a set. Say so gently WITHOUT indicating which "
-                  "detail is off. Ask them to double-check and re-share, or offer a different detail from "
-                  "options_caller_can_still_provide.")
+            t.say("The other details given don't match our records as a set. Say so gently WITHOUT indicating "
+                  "which detail is off. Ask them to double-check and re-share, or offer a different detail from "
+                  "options_caller_can_still_provide (never ask for a detail they just gave as if they hadn't).")
             return
 
         if ex["refusal"] or (ex["refused_fields"] and not new_fields):
@@ -277,11 +289,6 @@ class Agent:
                 t.require(*HUMAN_OFFER)
             return
 
-        if partial:
-            t.say("Some details were incomplete or unclear: "
-                  + ", ".join(PII_LABELS[f] for f in partial)
-                  + ". Ask them to give the complete value (full first and last name; full date of birth with day, "
-                    "month and year; full 10-digit phone; full email; exactly the last 4 digits).")
         if ex["pii"].get("policy_number"):
             t.say("Thank them for the policy number; note it helps locate the file but isn't one of the "
                   "verification details.")
