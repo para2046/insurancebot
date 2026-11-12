@@ -200,7 +200,7 @@ insurancebot/
 ├── docs/
 │   └── REQUIREMENTS_TRACEABILITY.md   # design doc: assumptions + requirement → design → tests
 ├── fixtures/                   # provided test data (policyholders, claims, guidelines, reps, consent)
-├── tests/test_gates.py         # 51 deterministic tests with a fake LLM (no API calls)
+├── tests/test_gates.py         # 52 deterministic tests with a fake LLM (no API calls)
 ├── evals/                      # live evaluation suites (call the real model)
 │   ├── common.py               # conversation runner, leak + grounding checks, LLM judge, reports
 │   ├── scripted.py             # 39 hand-written edge cases (one requirement each)
@@ -255,7 +255,7 @@ An LLM judge then grades each conversation against a rubric covering SOP adheren
 
 | Suite | Result (final code) |
 |---|---|
-| Gate tests (offline) | **51/51** |
+| Gate tests (offline) | **52/52** |
 | Identity matrix: every policyholder × field subset × format variants, corruptions, cross-record mixes | **1013/1013** |
 | Fixture integrity | **OK** |
 | Live dataset coverage: every policyholder, every claim's status/amounts, 6 guidance topics × 2 denied claims, both consent scenarios | **31/31** |

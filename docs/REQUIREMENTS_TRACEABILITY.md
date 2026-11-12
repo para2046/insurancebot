@@ -9,7 +9,7 @@ Each requirement from the assignment, its design, and the tests that validate it
 - `G:` generated simulated-caller category in `evals/generated.py`
 - `W:` dataset conversations against the deployed website (`evals/run_on_website.py`)
 
-Latest results: U 51/51 · S 39/39 (judge averages: SOP adherence 4.97, grounding 5.0, naturalness 4.9, empathy 4.49, memory 4.97) · D-A 1013/1013 · D-B OK · D-C 31/31 · G 38/40 on an unseen seed (both failures analysed; the real bug is fixed) · W 31/31 (6 runs).
+Latest results: U 52/52 · S 39/39 (judge averages: SOP adherence 4.97, grounding 5.0, naturalness 4.9, empathy 4.49, memory 4.97) · D-A 1013/1013 · D-B OK · D-C 31/31 · G 38/40 on an unseen seed (both failures analysed; the real bug is fixed) · W 31/31 (6 runs).
 
 ---
 
