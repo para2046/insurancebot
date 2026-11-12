@@ -55,6 +55,16 @@ with gr.Blocks(title="Insurance Claims SOP Agent") as demo:
     gr.Markdown("## Insurance Claims SOP Agent\nVERIFY_ID → RESOLVE_INTENT → PROCESS_CASE → POST_PROCESS. "
                 "The right panel shows what the SOP controller is doing on each turn.")
     session = gr.State()
+    with gr.Group():
+        with gr.Row(equal_height=True):
+            key = gr.Textbox(
+                label="🔑 Your LLM API key (OpenRouter)",
+                placeholder="sk-or-...   Get a key at https://openrouter.ai/keys",
+                info=("The agent's model calls use this key, for your browser session only. It is never stored. "
+                      + ("Leave empty to use the demo's shared key." if config.api_key()
+                         else "Required to chat.")),
+                type="password", scale=4)
+            model = gr.Textbox(label="Model", value=config.MODEL, scale=2)
     with gr.Row():
         with gr.Column(scale=3):
             chatbot = gr.Chatbot(height=520, label="Conversation")
@@ -64,15 +74,7 @@ with gr.Blocks(title="Insurance Claims SOP Agent") as demo:
                 reset = gr.Button("New conversation")
             gr.Examples(SAMPLES, inputs=msg, label="Sample caller messages")
         with gr.Column(scale=2):
-            with gr.Accordion("🔑 Your API key & settings", open=True):
-                key = gr.Textbox(
-                    label="Your OpenRouter API key",
-                    placeholder="sk-or-...  (get one at openrouter.ai/keys)",
-                    info=("Used only for your session in this browser, never stored. "
-                          + ("Leave empty to use the demo's shared key." if config.api_key()
-                             else "Required: this demo has no shared key.")),
-                    type="password")
-                model = gr.Textbox(label="Model", value=config.MODEL)
+            with gr.Accordion("Demo settings", open=False):
                 scenario = gr.Dropdown(list(STORE.consent_scenarios), value="default",
                                        label="Consent scenario (representative callers)")
             with gr.Tab("SOP state"):

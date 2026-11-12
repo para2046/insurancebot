@@ -52,14 +52,19 @@ about 15 minutes idle, so the first visit after that takes around a minute to wa
 > from the public repo URL, so pushes need a manual deploy (Render dashboard → **Manual Deploy**, or
 > `POST /v1/services/{id}/deploys` with the Render API).
 
-> **API key:** the app reads `OPENROUTER_API_KEY` from the environment or `.env`. You can also paste a key in the
-> UI under **Settings**, which overrides the environment key for that session. The model can be changed there too, or with `MODEL=...`.
+> **LLM API key:** the agent calls the model through OpenRouter. Visitors enter **their own OpenRouter key** in the
+> 🔑 field at the top of the page. It is used only for their browser session and is never stored. The live demo has
+> **no shared key**, so nobody spends the owner's credit. For a self-hosted copy you can also set
+> `OPENROUTER_API_KEY` (in the environment or `.env`) as a fallback for visitors who leave the field empty.
 
 ---
 
 ## 2. Using the demo UI
 
 ```
+┌──────────────────────────────────────────────────────────────────────────┐
+│ 🔑 Your LLM API key (OpenRouter) [sk-or-…          ]   Model [……]          │
+└──────────────────────────────────────────────────────────────────────────┘
 ┌───────────────────────────────────────┬──────────────────────────────────┐
 │ Conversation (chat with the agent)    │ ▸ Settings (API key, model,      │
 │                                       │   consent scenario)              │
@@ -74,7 +79,7 @@ about 15 minutes idle, so the first visit after that takes around a minute to wa
 - **SOP state** shows what the deterministic controller is doing on every turn: the current phase, which identity fields were received, remembered hints, the active claim, the scope and frustration counters, and an event log (for example `[VERIFY_ID] remembered case_type=healthcare…` or `verified party P9 -> RESOLVE_INTENT`).
 - **Email outbox** shows the summary email when the caller chooses to have it sent. Sending is mocked.
 - **Test identities** lists the fixture policyholders, so you can try other callers.
-- **Consent scenario** (under Settings) controls whether a representative's consent request is approved (`default`) or never arrives (`timeout`).
+- **Consent scenario** (under Demo settings) controls whether a representative's consent request is approved (`default`) or never arrives (`timeout`).
 
 ### Walkthrough: the official demo case (full workflow)
 
