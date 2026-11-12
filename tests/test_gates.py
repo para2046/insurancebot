@@ -422,3 +422,15 @@ def test_memory_off_by_default_and_never_connects():
 def test_memory_with_unreachable_database_disables_itself():
     m = MemoryStore(url="postgresql://nobody:nothing@127.0.0.1:1/none", enabled=True)
     assert not m.enabled
+
+
+def test_placeholder_env_keys_are_ignored(monkeypatch):
+    from sop_agent import config
+    from sop_agent.llm import LLMError, resolve_key
+    for placeholder in ("sk-or-...", "sk-…", "your-key-here", ""):
+        monkeypatch.setenv("OPENROUTER_API_KEY", placeholder)
+        monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+        monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+        assert config.api_key() is None
+        with pytest.raises(LLMError, match="paste your API key"):
+            resolve_key(None)

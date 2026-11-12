@@ -27,17 +27,25 @@ OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-5.6-luna")
 ANTHROPIC_MODEL = os.getenv("ANTHROPIC_MODEL", "claude-opus-5-5")
 
 
+def _real_key(name: str) -> str | None:
+    """A configured key, ignoring empty values and unedited placeholders such as `sk-or-...`."""
+    value = (os.getenv(name) or "").strip()
+    if not value or "..." in value or "…" in value or "your" in value.lower() or len(value) < 20:
+        return None
+    return value
+
+
 def api_key() -> str | None:
     """Optional server-side fallback keys (the live demo sets none: visitors bring their own)."""
-    return os.getenv("OPENROUTER_API_KEY")
+    return _real_key("OPENROUTER_API_KEY")
 
 
 def openai_key() -> str | None:
-    return os.getenv("OPENAI_API_KEY")
+    return _real_key("OPENAI_API_KEY")
 
 
 def anthropic_key() -> str | None:
-    return os.getenv("ANTHROPIC_API_KEY")
+    return _real_key("ANTHROPIC_API_KEY")
 
 
 def today() -> date:

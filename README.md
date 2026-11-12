@@ -27,17 +27,19 @@ git clone https://github.com/para2046/insurancebot.git
 cd insurancebot
 python -m venv .venv
 .venv/bin/pip install -r requirements.txt          # Windows: .venv\Scripts\pip install -r requirements.txt
-cp .env.example .env                               # then put your key in .env: OPENROUTER_API_KEY=sk-or-...
 .venv/bin/python app.py
 ```
-Open **http://localhost:7860**.
+Open **http://localhost:7860** and paste your OpenRouter, OpenAI or Anthropic key in the 🔑 field.
+*Optional:* `cp .env.example .env` and uncomment one key there to use it whenever the 🔑 field is left empty.
 
 ### Option B — Docker
 ```bash
 docker build -t insurancebot .
-docker run -e OPENROUTER_API_KEY=sk-or-... -p 7860:7860 insurancebot
+docker run -p 7860:7860 insurancebot                          # visitors paste their own key in the UI
+# or, with a server-side fallback key:
+docker run -p 7860:7860 -e OPENROUTER_API_KEY=sk-or-... insurancebot   # or OPENAI_API_KEY / ANTHROPIC_API_KEY
 ```
-Open **http://localhost:7860**.
+Open **http://localhost:7860**. (`podman` works the same way.)
 
 ### Option C — Render (hosted URL)
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/para2046/insurancebot)
