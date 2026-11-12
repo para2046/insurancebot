@@ -1,10 +1,12 @@
-"""Cross-conversation caller memory, keyed by the VERIFIED policyholder (party_id).
+"""OPTIONAL extension, OFF by default (set MEMORY_ENABLED=1): cross-conversation caller memory, keyed by the
+VERIFIED policyholder (party_id). The assignment only requires memory across phases within one conversation,
+which lives in Session.memory; this module is not needed for that.
 
 Written only after identity verification and read only after the next verification, so it can never
 leak to an unverified caller. One record per policyholder holding their recent contacts (newest first).
 
 Backend: Postgres when DATABASE_URL is set (the hosted demo), otherwise a local SQLite file
-(MEMORY_DB_PATH, default data/caller_memory.db). Set MEMORY_DISABLED=1 to turn it off.
+(MEMORY_DB_PATH, default data/caller_memory.db).
 """
 import json
 import os
@@ -20,9 +22,18 @@ _lock = threading.Lock()
 
 
 class MemoryStore:
-    def __init__(self, url: str | None = None, sqlite_path: str | None = None):
+    def __init__(self, url: str | None = None, sqlite_path: str | None = None, enabled: bool | None = None):
         self.url = url if url is not None else os.getenv("DATABASE_URL", "")
-        self.enabled = os.getenv("MEMORY_DISABLED", "") not in ("1", "true", "yes")
+        self.enabled = enabled if enabled is not None else \
+            os.getenv("MEMORY_ENABLED", "").lower() in ("1", "true", "yes")
+        if not self.enabled:
+            return                      # off: never touch a database
+        try:
+            self._init_backend(sqlite_path)
+        except Exception:
+            self.enabled = False        # e.g. an expired database: carry on without memory
+
+    def _init_backend(self, sqlite_path: str | None) -> None:
         if self.url:
             import psycopg  # only needed for the hosted Postgres backend
             self._psycopg = psycopg
@@ -85,7 +96,8 @@ class MemoryStore:
                 pass
 
     def forget(self, party_id: str) -> None:
-        self._query("DELETE FROM caller_memory WHERE party_id = ?", (party_id,))
+        if self.enabled:
+            self._query("DELETE FROM caller_memory WHERE party_id = ?", (party_id,))
 
 
 _store: MemoryStore | None = None

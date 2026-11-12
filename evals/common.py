@@ -8,9 +8,9 @@ from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-# Live suites run conversations independently: no caller memory carried between them unless a test asks.
+# Live suites run conversations independently (cross-conversation memory is off by default anyway).
 import os  # noqa: E402
-os.environ.setdefault("MEMORY_DISABLED", "1")
+os.environ.pop("MEMORY_ENABLED", None)
 
 from sop_agent import config  # noqa: E402
 from sop_agent.agent import Agent  # noqa: E402

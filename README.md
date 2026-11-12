@@ -165,7 +165,7 @@ flowchart LR
 | **Out of scope** | Polite refusal with no partial answer, then steer back. Messages that are partly off-topic also count. After 3 strikes, the agent offers a human. |
 | **Emotion** | Detects frustration, anger, anxiety, confusion and sadness. The reply leads with empathy, then explains *why* the step matters (privacy, fraud protection), then offers alternatives (other ID fields, a human). After repeated pushback or sustained anger, it offers a human. **Emotion never opens a gate.** |
 | **Human handoff** | On request, the agent transfers immediately and the notes are passed along. If a verified case was already handled, it settles the email summary first. |
-| **Memory** | *Within a call:* claim hints, intent, email preference and free-form notes ("already asked the lab to resend it") are captured in every phase and used later. *Across calls:* after verification, a short record of the conversation is saved per policyholder (claim, questions, notes, pending documents, outcome; no DOB/SSN). On the next call it's recalled **only after re-verification**: the agent welcomes them back and proposes the same claim unless they mention a different one. |
+| **Memory** | Claim hints, intent, email preference and free-form notes ("already asked the lab to resend it") are captured in every phase and used in later phases of the same conversation. |
 
 ---
 
@@ -178,13 +178,13 @@ insurancebot/
 │   ├── config.py               # env config: API key, MODEL, TODAY override, SOP thresholds
 │   ├── llm.py                  # provider detection from the key; OpenRouter/OpenAI client, strict JSON-schema calls
 │   ├── anthropic_llm.py        # Anthropic provider (official SDK, structured outputs, refusal fallbacks)
-│   ├── memory_store.py         # cross-conversation caller memory (Postgres via DATABASE_URL, else SQLite)
+│   ├── memory_store.py         # optional extension, off by default: memory across conversations
 │   ├── state.py                # Session dataclass: phase, identity, memory, counters, email, history, event log
 │   ├── data.py                 # fixture Store, PII normalization + matching, grounded claim_facts()
 │   ├── extract.py              # per-turn extraction prompt + strict JSON schema
 │   └── agent.py                # the SOP controller: routing, phase handlers, responder, enforce, guard
 ├── fixtures/                   # provided test data (policyholders, claims, guidelines, reps, consent)
-├── tests/test_gates.py         # 49 deterministic tests with a fake LLM (no API calls)
+├── tests/test_gates.py         # 51 deterministic tests with a fake LLM (no API calls)
 ├── evals/                      # live evaluation suites (call the real model)
 │   ├── common.py               # conversation runner, leak + grounding checks, LLM judge, reports
 │   ├── scripted.py             # 39 hand-written edge cases (one requirement each)
@@ -238,7 +238,7 @@ An LLM judge then grades each conversation against a rubric covering SOP adheren
 
 | Suite | Result (final code) |
 |---|---|
-| Gate tests (offline) | **49/49** |
+| Gate tests (offline) | **51/51** |
 | Identity matrix: every policyholder × field subset × format variants, corruptions, cross-record mixes | **1013/1013** |
 | Fixture integrity | **OK** |
 | Live dataset coverage: every policyholder, every claim's status/amounts, 6 guidance topics × 2 denied claims, both consent scenarios | **31/31** |
@@ -257,10 +257,20 @@ Every requirement is mapped to its design and its tests in [`docs/REQUIREMENTS_T
 |---|---|---|
 | `OPENROUTER_API_KEY` / `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` | — | Optional server-side fallback keys (visitors can paste their own) |
 | `MODEL` / `OPENAI_MODEL` / `ANTHROPIC_MODEL` | `openai/gpt-5.6-luna` / `gpt-5.6-luna` / `claude-opus-5-5` | Default model per provider (the UI's Model field overrides it) |
-| `DATABASE_URL` | — | Postgres for cross-conversation memory (else SQLite at `MEMORY_DB_PATH`, default `data/caller_memory.db`; `MEMORY_DISABLED=1` turns it off) |
+| `MEMORY_ENABLED` | off | Turns on the optional cross-conversation memory extension (see below). Storage: Postgres via `DATABASE_URL`, else SQLite at `MEMORY_DB_PATH` |
 | `MAX_TOKENS` | `1200` | Per-call cap (keep it set; low-credit keys reject the model maximum) |
 | `TODAY` | real date | Pin "today" for deadline math, e.g. `TODAY=2026-02-01` |
 | `PORT` / `HOST` | `7860` / `0.0.0.0` | UI server |
+
+### Optional extension: memory across conversations (off by default)
+
+The assignment asks for memory **across phases within one conversation**, which is always on (above). As an
+extra, `sop_agent/memory_store.py` can also remember a policyholder **between conversations**. Set
+`MEMORY_ENABLED=1` to turn it on.
+- After verification, it keeps a short record per policyholder: claim, questions, notes, pending documents and outcome. No DOB, SSN or ID digits.
+- On the next call it's recalled **only after re-verification**: the agent welcomes them back and proposes the same claim, unless they mention a different one.
+
+It's disabled in the live demo and covered by unit tests (`test_memory_*`).
 
 ## 7. Notes on the data
 - **Scope:** this is a claims *support* agent for existing claims. Filing new claims, policy changes and payments are routed to a human. Every scope assumption (no claim ID, denied claims, no claims on file, unknown callers…) is listed in [`docs/REQUIREMENTS_TRACEABILITY.md`](docs/REQUIREMENTS_TRACEABILITY.md#scope-and-design-assumptions).

@@ -42,7 +42,7 @@ class FakeLLM:
 
 
 def fresh_memory():
-    return MemoryStore(url="", sqlite_path=os.path.join(tempfile.mkdtemp(), "m.db"))
+    return MemoryStore(url="", sqlite_path=os.path.join(tempfile.mkdtemp(), "m.db"), enabled=True)
 
 
 def run(extractions, session=None, memory=None):
@@ -408,3 +408,17 @@ def test_same_conversation_updates_its_own_record():
     mem = fresh_memory()
     run([MARGARET_OPENING, {"confirmation": "yes"}, {"question": "q1"}, {"question": "q2"}], memory=mem)
     assert len(mem.load("P9")) == 1
+
+
+def test_memory_off_by_default_and_never_connects():
+    os.environ.pop("MEMORY_ENABLED", None)
+    m = MemoryStore(url="postgresql://nobody:nothing@127.0.0.1:1/none")   # would fail if it connected
+    assert not m.enabled and m.load("P9") == []
+    m.save_contact("P9", {"contact_id": "x"})                               # no-op, no error
+    s, _ = run([MARGARET_OPENING], memory=m)
+    assert s.verified and s.previous_contacts == []
+
+
+def test_memory_with_unreachable_database_disables_itself():
+    m = MemoryStore(url="postgresql://nobody:nothing@127.0.0.1:1/none", enabled=True)
+    assert not m.enabled
