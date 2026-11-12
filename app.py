@@ -28,16 +28,20 @@ def new_session(scenario: str):
     return s, list(s.history), s.panel(), ""
 
 
-def chat(message: str, s: Session, key: str, model: str):
-    if not message.strip():
-        return "", s.history, s.panel(), _outbox(s)
+def chat(message: str | None, s: Session | None, key: str | None, model: str | None):
+    # Browsers may send None for untouched fields, and a fast first message can arrive before demo.load ran.
+    if s is None:
+        s = new_session("default")[0]
+    message = (message or "").strip()
+    if not message:
+        return "", list(s.history), s.panel(), _outbox(s), s
     try:
-        agent = Agent(LLM(api_key=key.strip() or None, model=model.strip() or None), STORE)
+        agent = Agent(LLM(api_key=(key or "").strip() or None, model=(model or "").strip() or None), STORE)
         agent.handle(s, message)
     except LLMError as e:
         s.history.append({"role": "user", "content": message})
         s.history.append({"role": "assistant", "content": f"⚠️ {e}"})
-    return "", list(s.history), s.panel(), _outbox(s)
+    return "", list(s.history), s.panel(), _outbox(s), s
 
 
 def _outbox(s: Session) -> str:
@@ -73,7 +77,7 @@ with gr.Blocks(title="Insurance Claims SOP Agent") as demo:
                 gr.JSON(value=STORE.policyholders, label="policyholders.json")
                 gr.JSON(value=STORE.representatives, label="representatives.json")
 
-    outputs = [msg, chatbot, state_view, outbox]
+    outputs = [msg, chatbot, state_view, outbox, session]
     send.click(chat, [msg, session, key, model], outputs)
     msg.submit(chat, [msg, session, key, model], outputs)
     reset.click(new_session, [scenario], [session, chatbot, state_view, msg]).then(
