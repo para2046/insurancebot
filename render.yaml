@@ -9,7 +9,7 @@ services:
     healthCheckPath: /
     autoDeploy: true
     envVars:
-      - key: OPENROUTER_API_KEY
-        sync: false          # Render asks for the value when you create the Blueprint; never stored in git
+      # No shared OPENROUTER_API_KEY: visitors paste their own key in the UI.
+      # (Add one in the Render dashboard if you want a fallback that spends your credit.)
       - key: MODEL
         value: openai/gpt-5.6-luna

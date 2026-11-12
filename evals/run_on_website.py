@@ -1,5 +1,5 @@
 """Run the dataset validation conversations (Part C) against a deployed instance through its web API,
-exactly as a browser would: fresh session, settings fields left empty (None).
+exactly as a browser would: fresh session, the visitor's key (OPENROUTER_API_KEY) in the key field.
 
 Usage: python evals/run_on_website.py [URL]   (default: the Render deployment)
 """
@@ -14,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from gradio_client import Client  # noqa: E402
 
 from evals.common import Result, check_grounded_numbers, check_no_leak, write_report  # noqa: E402
+from sop_agent import config  # noqa: E402
 from evals.dataset_validation import part_c_cases  # noqa: E402
 
 URL = sys.argv[1] if len(sys.argv) > 1 else "https://insurancebot-w6cl.onrender.com/"
@@ -35,7 +36,8 @@ def run_case(case: dict) -> Result:
             result.transcript.append(("caller", turn, state.get("phase"), verified_before))
             if state.get("phase") == "HUMAN_HANDOFF":
                 break
-            _, conv, state, _ = client.predict(turn, None, None, api_name="/chat")  # gr.State isn't exposed
+            # like a visitor: their own key in the 🔑 field, model field left empty
+            _, conv, state, _ = client.predict(turn, config.api_key(), None, api_name="/chat")
             reply = _text(conv[-1]["content"])
             if reply.startswith("⚠️"):
                 raise RuntimeError(f"app returned an error message: {reply[:200]}")

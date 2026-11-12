@@ -43,7 +43,7 @@ Open **http://localhost:7860**.
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/para2046/insurancebot)
 
 Click the button, or go to Render → **New → Blueprint** and pick this repo. `render.yaml` defines a free Docker web
-service. Paste your OpenRouter key when Render asks for `OPENROUTER_API_KEY`. Free instances sleep after
+service. No server key is needed, because visitors enter their own. Free instances sleep after
 about 15 minutes idle, so the first visit after that takes around a minute to wake up.
 
 **Live demo:** https://insurancebot-w6cl.onrender.com
