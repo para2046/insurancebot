@@ -12,12 +12,27 @@ class LLMError(RuntimeError):
     pass
 
 
+KEY_HELP = ("Please paste your OpenRouter API key (it starts with sk-or-) into the 🔑 field at the top of the "
+            "page — get one at https://openrouter.ai/keys — then send your message again.")
+
+
+def clean_key(raw: str | None) -> str:
+    """Accept common paste mistakes: quotes, an `OPENROUTER_API_KEY=` prefix, a `Bearer ` prefix, whitespace."""
+    key = (raw or "").strip().strip("'\"").strip()
+    key = re.sub(r"^(export\s+)?OPENROUTER_API_KEY\s*=\s*", "", key, flags=re.I).strip("'\"").strip()
+    key = re.sub(r"^Bearer\s+", "", key, flags=re.I)
+    return re.sub(r"\s+", "", key)
+
+
 class LLM:
     def __init__(self, api_key: str | None = None, model: str | None = None):
-        key = api_key or config.api_key()
+        key = clean_key(api_key) or config.api_key()
         if not key:
-            raise LLMError("Please enter your LLM API key (OpenRouter) in the 🔑 field at the top of the page "
-                           "(get one at https://openrouter.ai/keys), then send your message again.")
+            raise LLMError(KEY_HELP)
+        if not key.startswith("sk-or-"):
+            raise LLMError("That doesn't look like an OpenRouter API key (your browser may have auto-filled a "
+                           "saved password). Clear the 🔑 field and paste only the key — it starts with "
+                           "sk-or- (get one at https://openrouter.ai/keys).")
         self.model = model or config.MODEL
         self.client = OpenAI(
             base_url=config.OPENROUTER_BASE_URL,
@@ -43,6 +58,13 @@ class LLM:
                 if attempt < 2 and (status is None or status == 429 or status >= 500):
                     time.sleep(2 * (attempt + 1))
                     continue
+                if status == 401:
+                    raise LLMError("OpenRouter rejected this API key (it may be mistyped, revoked or deleted). "
+                                   "Check the key in the 🔑 field — it starts with sk-or- — or create a new one "
+                                   "at https://openrouter.ai/keys.") from e
+                if status == 402:
+                    raise LLMError("This OpenRouter key is out of credit or over its spending limit. Add credit "
+                                   "or raise the key's limit at https://openrouter.ai/keys.") from e
                 raise LLMError(f"Model call failed: {e}") from e
 
     def json(self, system: str, user: str, max_tokens: int = config.MAX_TOKENS, schema: dict | None = None) -> dict:

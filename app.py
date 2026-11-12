@@ -63,7 +63,10 @@ with gr.Blocks(title="Insurance Claims SOP Agent") as demo:
                 info=("The agent's model calls use this key, for your browser session only. It is never stored. "
                       + ("Leave empty to use the demo's shared key." if config.api_key()
                          else "Required to chat.")),
-                type="password", scale=4)
+                type="password", scale=4,
+                # stop password managers from auto-filling a saved password into the key field
+                html_attributes=gr.InputHTMLAttributes(autocomplete="new-password", autocorrect="off",
+                                                       spellcheck=False, autocapitalize="off"))
             model = gr.Textbox(label="Model", value=config.MODEL, scale=2)
     with gr.Row():
         with gr.Column(scale=3):
