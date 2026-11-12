@@ -64,8 +64,14 @@ with gr.Blocks(title="Insurance Claims SOP Agent") as demo:
                 reset = gr.Button("New conversation")
             gr.Examples(SAMPLES, inputs=msg, label="Sample caller messages")
         with gr.Column(scale=2):
-            with gr.Accordion("Settings", open=False):
-                key = gr.Textbox(label="OpenRouter API key (optional, overrides OPENROUTER_API_KEY)", type="password")
+            with gr.Accordion("🔑 Your API key & settings", open=True):
+                key = gr.Textbox(
+                    label="Your OpenRouter API key",
+                    placeholder="sk-or-...  (get one at openrouter.ai/keys)",
+                    info=("Used only for your session in this browser, never stored. "
+                          + ("Leave empty to use the demo's shared key." if config.api_key()
+                             else "Required: this demo has no shared key.")),
+                    type="password")
                 model = gr.Textbox(label="Model", value=config.MODEL)
                 scenario = gr.Dropdown(list(STORE.consent_scenarios), value="default",
                                        label="Consent scenario (representative callers)")

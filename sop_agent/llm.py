@@ -16,7 +16,8 @@ class LLM:
     def __init__(self, api_key: str | None = None, model: str | None = None):
         key = api_key or config.api_key()
         if not key:
-            raise LLMError("No OpenRouter API key. Set OPENROUTER_API_KEY or paste a key in the UI.")
+            raise LLMError("Please enter your OpenRouter API key in the “Your API key & settings” panel on the right "
+                           "(get one at https://openrouter.ai/keys), then send your message again.")
         self.model = model or config.MODEL
         self.client = OpenAI(
             base_url=config.OPENROUTER_BASE_URL,
