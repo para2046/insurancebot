@@ -105,20 +105,10 @@ repo and replace `fixtures/`, or set `FIXTURES_DIR` on your deployment.
 
 ## 2. Using the demo UI
 
-```
-┌──────────────────────────────────────────────────────────────────────────┐
-│ 🔑 Your LLM API key (OpenRouter) [sk-or-…          ]   Model [……]          │
-└──────────────────────────────────────────────────────────────────────────┘
-┌───────────────────────────────────────┬──────────────────────────────────┐
-│ Conversation (chat with the agent)    │ ▸ Settings (API key, model,      │
-│                                       │   consent scenario)              │
-│                                       │ [SOP state] [Email outbox]       │
-│                                       │ [Test identities]                │
-│ [ type as the caller…        ] [Send] │  live controller state: phase,   │
-│ [New conversation]                    │  verified fields (masked),       │
-│ Sample caller messages (click to use) │  memory, counters, decision log  │
-└───────────────────────────────────────┴──────────────────────────────────┘
-```
+The page has three areas:
+- **Top bar:** the 🔑 field for your OpenRouter, OpenAI or Anthropic key, and an optional Model field.
+- **Left:** the chat. There's a message box with **Send**, a **New conversation** button, and sample caller messages you can click to use.
+- **Right:** three tabs (SOP state, Email outbox, Test identities) and a collapsed **Demo settings** section.
 
 - **SOP state** shows what the deterministic controller is doing on every turn: the current phase, which identity fields were received, remembered hints, the active claim, the scope and frustration counters, and an event log (for example `[VERIFY_ID] remembered case_type=healthcare…` or `verified party P9 -> RESOLVE_INTENT`).
 - **Email outbox** shows the summary email when the caller chooses to have it sent. Sending is mocked.
