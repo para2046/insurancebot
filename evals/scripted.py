@@ -195,4 +195,36 @@ CASES = [
         "Ava Lopez, DOB August 21 1990, SSN ends 9180. What's the status of my claim?"],
         expect=st(lambda s: s.verified and s.handoff_offered, "says no claims, offers human"),
         judge="Ava has no claims on file. Agent must not invent one; says none found and offers a human."),
+
+    # ---------------- added from the requirement traceability review
+    dict(name="clarification_question_during_verify", category="verify", turns=[
+        "Hi, I'm Margaret Chen. Why do you need my date of birth? And what counts as the 'phone on file'?",
+        "OK. 1985-03-15, and my phone is 650-521-2836."],
+        expect=st(lambda s: s.verified, "verified after clarification answered"),
+        must_say=[(0, ["protect", "privacy", "verify", "secur"])],
+        judge="Caller asks clarification questions during VERIFY_ID. Agent answers them naturally (why DOB is "
+              "needed, what 'on file' means) without disclosing claim data, then continues verification."),
+    dict(name="confused_caller", category="emotion", turns=[
+        "I'm so confused, I got a letter saying something about a denial and an appeal deadline and I don't "
+        "understand any of it. Margaret Chen, 3/15/1985, SSN 4472.", "Yes.", "What does 'net pay' mean?"],
+        expect=st(lambda s: s.active_case_id == "CL-2048", "reaches CL-2048"),
+        judge="Confused caller. Agent acknowledges the confusion, explains in plain words step by step, and "
+              "explains the term 'net pay' using the claim field meaning (finalized amount paid; here 0.00)."),
+    dict(name="end_call_during_verification", category="post", turns=[
+        "Hi, I want to ask about my claim.", "Actually never mind, I'll call back later. Bye."],
+        expect=st(lambda s: s.phase == "CLOSED" and not s.verified and not s.outbox, "closed without verification"),
+        judge="Caller ends the call during VERIFY_ID. Agent must let them go politely, not insist on verification, "
+              "and not offer an email (unverified)."),
+    dict(name="end_call_in_other_language", category="post", turns=[
+        "你好，我想问一下我的理赔", "ok, 我知道了 现在我们可以结束对话了"],
+        expect=st(lambda s: s.phase == "CLOSED", "closed"),
+        judge="Caller (Chinese) ends the call during VERIFY_ID. Agent says goodbye in the caller's language "
+              "without demanding verification."),
+    dict(name="messy_language_multi_hint", category="resolve", turns=[
+        "ugh ok so its margaret chen dob march 15 85 ssn 4472, theres that car thing from feb thats still not "
+        "done??", "ya that one", "so like how much am i gonna get back"],
+        expect=st(lambda s: s.active_case_id == "CL-2102", "messy language resolves to auto CL-2102"),
+        must_say=[(2, ["3,200", "3200"])],
+        judge="Messy, informal language. Agent interprets 'car thing from feb' as the open auto claim CL-2102 and "
+              "answers the expected reimbursement (3200.00) grounded."),
 ]

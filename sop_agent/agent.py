@@ -310,9 +310,10 @@ class Agent:
             s.memory["acknowledged"] = True
             t.say("Let them know you've noted what they're calling about and will pull it up as soon as identity "
                   "is verified. Do not confirm or reveal anything about it.")
-        if ex["question"] and not new_fields:
-            t.say("If they asked a question about the process (e.g. why verification is needed), answer it briefly; "
-                  "if they asked about their claim, explain it will be covered right after verification.")
+        if ex["question"]:
+            t.say(f"They asked: '{ex['question']}'. If it's about the process or terms (why a detail is needed, "
+                  "what 'on file' means = the contact details recorded on their policy), answer it briefly and "
+                  "plainly; if it's about their claim, explain it will be covered right after verification.")
         t.say("Ask for the remaining verification details: they need details_still_needed more, chosen from "
               "options_caller_can_still_provide. Ask naturally, ideally for 1-2 items at a time.")
 

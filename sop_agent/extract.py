@@ -33,7 +33,8 @@ Return ONLY a JSON object with exactly these keys:
    now, or accepts an offer to be transferred. Merely mentioning a representative is not enough.
 "in_scope": false ONLY if the whole message is unrelated to insurance, claims, the caller's policy,
    identity verification, or this call (e.g. "what is RL?", trivia, coding help). Greetings, thanks,
-   complaints, emotions, and questions about why a step is needed are in scope.
+   complaints, emotions, questions about why a step is needed, and questions about insurance or claim terms
+   (e.g. "what does net pay / deductible / appeal / on file mean?") are in scope.
 "off_topic_part": if the message mixes in-scope content with an unrelated question, that unrelated
    question as a short string, else null.
 "emotion": "neutral" | "frustrated" | "angry" | "anxious" | "confused" | "sad".

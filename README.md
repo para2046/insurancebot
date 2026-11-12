@@ -182,10 +182,10 @@ insurancebot/
 │   ├── extract.py              # per-turn extraction prompt + strict JSON schema
 │   └── agent.py                # the SOP controller: routing, phase handlers, responder, enforce, guard
 ├── fixtures/                   # provided test data (policyholders, claims, guidelines, reps, consent)
-├── tests/test_gates.py         # 40 deterministic tests with a fake LLM (no API calls)
+├── tests/test_gates.py         # 44 deterministic tests with a fake LLM (no API calls)
 ├── evals/                      # live evaluation suites (call the real model)
 │   ├── common.py               # conversation runner, leak + grounding checks, LLM judge, reports
-│   ├── scripted.py             # 34 hand-written edge cases (one requirement each)
+│   ├── scripted.py             # 39 hand-written edge cases (one requirement each)
 │   ├── run_scripted.py
 │   ├── generated.py            # persona generator + LLM caller simulator
 │   ├── run_generated.py
@@ -222,7 +222,7 @@ and `required` (content that must appear in the reply).
 .venv/bin/python -m pytest tests                          # free: 36 gate tests with a fake LLM
 .venv/bin/python evals/dataset_validation.py --offline-only  # free: identity matrix + fixture integrity
 .venv/bin/python evals/dataset_validation.py              # + live conversations over every fixture record
-.venv/bin/python evals/run_scripted.py                    # 34 edge cases + LLM judge
+.venv/bin/python evals/run_scripted.py                    # 39 edge cases + LLM judge
 .venv/bin/python evals/run_generated.py --n 40 --seed 23  # 40 LLM-simulated callers + LLM judge
 .venv/bin/python evals/run_on_website.py [URL]            # dataset conversations against a deployed site (browser-style)
 ```
@@ -236,15 +236,16 @@ An LLM judge then grades each conversation against a rubric covering SOP adheren
 
 | Suite | Result (final code) |
 |---|---|
-| Gate tests (offline) | **40/40** |
+| Gate tests (offline) | **44/44** |
 | Identity matrix: every policyholder × field subset × format variants, corruptions, cross-record mixes | **1013/1013** |
 | Fixture integrity | **OK** |
 | Live dataset coverage: every policyholder, every claim's status/amounts, 6 guidance topics × 2 denied claims, both consent scenarios | **31/31** |
-| Scripted edge cases | **33/34** in the full run. The one miss was an over-strict keyword check (the judge scored the reply 5/5); fixed |
+| Scripted edge cases | **39/39** |
 | Simulated callers, unseen seed | **38/40** in the full run. One real bug, now fixed; one simulator hang-up |
 | Dataset coverage on the **live website** (browser-style calls) | **31/31**, twice in a row after the fixes below |
 
 Details, transcripts, and the list of bugs these tests found are in [`evals/reports/SUMMARY.md`](evals/reports/SUMMARY.md).
+Every requirement is mapped to its design and its tests in [`docs/REQUIREMENTS_TRACEABILITY.md`](docs/REQUIREMENTS_TRACEABILITY.md).
 
 ---
 

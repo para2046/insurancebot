@@ -1,0 +1,236 @@
+[
+ {
+  "name": "clarification_question_during_verify",
+  "category": "verify",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "verified after clarification answered | phase=RESOLVE_INTENT verified=True active=None handoff_offered=False"
+   },
+   "reply0_mentions:protect": {
+    "passed": true,
+    "detail": "expected one of ['protect', 'privacy', 'verify', 'secur']"
+   }
+  },
+  "judge": {
+   "pass": true,
+   "scores": {
+    "sop_adherence": 5,
+    "grounding": 5,
+    "naturalness": 5,
+    "empathy": 4,
+    "memory": 5
+   },
+   "issues": []
+  },
+  "transcript": [
+   [
+    "caller",
+    "Hi, I'm Margaret Chen. Why do you need my date of birth? And what counts as the 'phone on file'?",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "I understand why those terms are confusing. Your date of birth is used to verify your identity and protect your private health and financial information; \u201cphone on file\u201d means the contact number recorded on your policy. I\u2019ve noted that you\u2019re calling with a general claim question and can pull it up once your identity is verified. Please provide your date of birth and the phone number recorded on your policy.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "caller",
+    "OK. 1985-03-15, and my phone is 650-521-2836.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. What are you calling about today? I can help with one of these claims:\n\n- Auto claim filed February 28, 2026 \u2014 open\n- Healthcare claim filed January 12, 2026 \u2014 denied\n- Dental claim filed November 3, 2025 \u2014 closed\n- Healthcare claim filed January 28, 2025 \u2014 closed",
+    "RESOLVE_INTENT",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "RESOLVE_INTENT",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "margaret chen",
+    "dob": "\u2022\u2022\u202215",
+    "phone": "\u2022\u2022\u202236"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": null,
+    "status": null,
+    "month": null,
+    "year": null,
+    "case_id": null,
+    "intent": "general_claim_question",
+    "notes": [],
+    "acknowledged": true
+   },
+   "candidate_case_id": null,
+   "active_case_id": null,
+   "questions_asked": [],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered intent=general_claim_question",
+    "[VERIFY_ID] received full_name",
+    "[VERIFY_ID] received dob, phone",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "confused_caller",
+  "category": "emotion",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "reaches CL-2048 | phase=PROCESS_CASE verified=True active=CL-2048 handoff_offered=False"
+   }
+  },
+  "judge": {
+   "pass": true,
+   "scores": {
+    "sop_adherence": 5,
+    "grounding": 5,
+    "naturalness": 5,
+    "empathy": 5,
+    "memory": 5
+   },
+   "issues": []
+  },
+  "transcript": [
+   [
+    "caller",
+    "I'm so confused, I got a letter saying something about a denial and an appeal deadline and I don't understand any of it. Margaret Chen, 3/15/1985, SSN 4472.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "I understand why that denial letter and appeal deadline feel confusing. Thank you, Margaret\u2014your identity is verified. I found a matching healthcare claim, case CL-2048, filed January 12, 2026, and its status is denied. Can you confirm this is the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "Yes.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry\u2014getting a denial like this is frustrating. For claim CL-2048, the review file did not include the pathology report and the treating provider\u2019s office note, so those are the documents needed; the easiest way to submit them is through the member portal or claim upload link, with each file complete and readable and the claim details and provider or facility name visible when available. The appeal deadline was March 18, 2026, and has passed; I don\u2019t have information about late appeals, but a human claims representative can look into that with you. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "What does 'net pay' mean?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "That term can be confusing. \u201cNet pay\u201d means the finalized amount the insurance company paid for the claim. For claim CL-2048, it is $0.00. Is there anything else about this claim I can clarify?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "margaret chen",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": "denied",
+    "month": "January",
+    "year": "2026",
+    "case_id": "CL-2048",
+    "intent": "general_claim_question",
+    "notes": [
+     "Received a letter mentioning a denial and an appeal deadline"
+    ]
+   },
+   "candidate_case_id": "CL-2048",
+   "active_case_id": "CL-2048",
+   "questions_asked": [
+    "What does \u201cnet pay\u201d mean?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "confused",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered status=denied, intent=denial_question, note='Received a letter mentioning a denial and an appeal deadline'",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-2048",
+    "[RESOLVE_INTENT] remembered case_type=healthcare, month=January, year=2026, case_id=CL-2048",
+    "[RESOLVE_INTENT] active case CL-2048 (intent=denial_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=general_claim_question"
+   ]
+  },
+  "outbox": []
+ }
+]
