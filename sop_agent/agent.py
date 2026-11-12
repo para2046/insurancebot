@@ -649,7 +649,7 @@ class Agent:
             for doc in facts.get("documents", []):
                 next_steps.append(f"Submit the {doc['document']} via the member portal or claim upload link.")
             if facts.get("documents"):
-                next_steps.append("After submission, review usually takes "
+                next_steps.append("Expected review time after submission: "
                                   + self.store.guide["claim_followup_settings"]["average_processing_time_after_submission"]["en"] + ".")
             if facts.get("appeal_deadline_status"):
                 dl = claim["appeal_deadline"]
