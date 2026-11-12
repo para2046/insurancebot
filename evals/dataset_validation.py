@@ -162,15 +162,19 @@ def part_c_cases() -> list[dict]:
                     f"verified as {pid}" + ("" if hc else " and told no claims on file"))))
     for c in STORE.claims:
         p = STORE.party(c["party_id"])
-        status_kw = {"denied": [d for d in c.get("documents_needed", [])],
-                     "closed": [c["net_pay"], f"{float(c['net_pay']):,.2f}", f"{float(c['net_pay']):,.0f}"],
-                     "open": [c["expected_reimbursement_amount"], f"{float(c['expected_reimbursement_amount']):,.0f}"]}[c["status"]]
+        def money(field):
+            v = c.get(field)
+            return [v, f"{float(v):,.2f}", f"{float(v):,.0f}"] if v not in (None, "") else []
+        status_kw = {"denied": list(c.get("documents_needed", [])),
+                     "closed": money("net_pay"),
+                     "open": money("expected_reimbursement_amount")}.get(c["status"]) or \
+            (money("expected_reimbursement_amount") or [c["status"]])     # any other status, e.g. "pending"
         cases.append(dict(
             name=f"claim_{c['case_id']}_overview", category="claim_facts",
             turns=[opening(p, ("full_name", "dob", "id_last4"), claim_hint(c)), "Yes, that's the one.",
                    "What's the status, and how much was paid or can I expect?"],
             expect=lambda s, cid=c["case_id"]: (s.active_case_id == cid, f"resolved to {cid}"),
-            must_say=[(0, [c["case_id"]]), (2, [c["status"], *(["open", "in progress"] if c["status"] == "open" else [])]),
+            must_say=[(0, [c["case_id"]]), ("any", [c["status"], *(["open", "in progress"] if c["status"] == "open" else [])]),
                       ("any" if c["status"] == "denied" else 2, status_kw)],
             judge=f"Ground-truth check for claim {c['case_id']}: {c}. Agent must state the status and amounts "
                   f"correctly and only from this data."))

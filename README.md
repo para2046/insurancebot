@@ -21,7 +21,7 @@ VERIFY_ID  ->  RESOLVE_INTENT  ->  PROCESS_CASE  ->  POST_PROCESS
 | [`docs/REQUIREMENTS_TRACEABILITY.md`](docs/REQUIREMENTS_TRACEABILITY.md) | **Design document:** scope and assumptions (existing-claims support, no claim ID, denied claims, no claims, unknown callers…), then every requirement from the brief mapped to its design, the tests that validate it, and its status |
 | [`evals/reports/SUMMARY.md`](evals/reports/SUMMARY.md) | Test results across all suites, and the bugs the tests found and how each was fixed |
 | [`evals/reports/`](evals/reports/) | Full reports with every test conversation transcript (`scripted-*`, `generated-*`, `dataset-*`, `website-*`; `.md` to read, `.json` raw) |
-| [`fixtures/`](fixtures/) | The provided test data (policyholders, claims, guidelines, representatives, consent scenarios) |
+| [`fixtures/`](fixtures/) | The provided test data (policyholders, claims, guidelines, representatives, consent scenarios). To use your own, see [Using your own test data](#using-your-own-test-data) |
 | [`.env.example`](.env.example) | Optional settings (fallback API keys, default models, `TODAY`) |
 | [`render.yaml`](render.yaml), [`Dockerfile`](Dockerfile) | Hosting: the Render blueprint and the container image |
 
@@ -65,6 +65,36 @@ about 15 minutes idle, so the first visit after that takes around a minute to wa
 > Auto-deploy on push only works if the repo is connected through Render's GitHub app. The live demo was created
 > from the public repo URL, so pushes need a manual deploy (Render dashboard → **Manual Deploy**, or
 > `POST /v1/services/{id}/deploys` with the Render API).
+
+### Using your own test data
+
+The agent reads all policyholders, claims and guidance from a folder of six JSON files. By default that's
+[`fixtures/`](fixtures/) (the sample data from the assignment). To test with your own data, put the same six
+files, with the **same file names and the same JSON structure as the samples**, in a folder and point
+`FIXTURES_DIR` at it:
+
+| File | Holds | Fields the agent relies on |
+|---|---|---|
+| `policyholders.json` | People who can be verified | `party_id`, `name`, `dob` (YYYY-MM-DD), `phone`, `email`, `id_type`, `id_last4`, `policy_number`; optional `name_aliases`, `phone_aliases`, `email_aliases` |
+| `claims.json` | Their claims | `case_id`, `party_id`, `case_type`, `created_at` (YYYY-MM-DD), `status`, `summary`; as applicable `denial_reason`, `documents_needed`, `appeal_deadline`, and the amount fields |
+| `required_document_guideline.json` | Submission and follow-up guidance | Same sections as the sample. Documents without specific guidance fall back to the general guidance |
+| `representatives.json` | Who may call on someone's behalf | `rep_name`, `relationship`, `buyer_party_id` |
+| `consent_scenarios.json` | Simulated consent outcomes | `default` (and optionally `timeout`) status sequences |
+| `claim_schema.json` | Meaning of the amount fields | `field_descriptions` |
+
+```bash
+# local
+FIXTURES_DIR=/path/to/my_data .venv/bin/python app.py
+# Docker: mount the folder read-only and point FIXTURES_DIR at it
+docker run -p 7860:7860 -v /path/to/my_data:/data:ro -e FIXTURES_DIR=/data insurancebot
+# check the data before chatting (free, no API calls): identity matching over every record + file integrity
+FIXTURES_DIR=/path/to/my_data .venv/bin/python evals/dataset_validation.py --offline-only
+```
+
+New claim statuses, case types and documents work without code changes. This was tested with an extra
+policyholder, a `pending` home claim, and a document that has no guidance entry. The **Test identities** tab in the
+UI shows exactly which records are loaded. The hosted demo uses the sample data; to host your own data, fork the
+repo and replace `fixtures/`, or set `FIXTURES_DIR` on your deployment.
 
 > **LLM API key:** visitors paste **their own key** in the 🔑 field at the top of the page: OpenRouter, OpenAI
 > or Anthropic, detected from the key's prefix. It is used only for their browser session and never stored. The live
@@ -276,6 +306,7 @@ Every requirement is mapped to its design and its tests in [`docs/REQUIREMENTS_T
 | `MODEL` / `OPENAI_MODEL` / `ANTHROPIC_MODEL` | `openai/gpt-5.6-luna` / `gpt-5.6-luna` / `claude-opus-5-5` | Default model per provider (the UI's Model field overrides it) |
 | `MEMORY_ENABLED` | off | Turns on the optional cross-conversation memory extension (see below). Storage: Postgres via `DATABASE_URL`, else SQLite at `MEMORY_DB_PATH` |
 | `MAX_TOKENS` | `1200` | Per-call cap (keep it set; low-credit keys reject the model maximum) |
+| `FIXTURES_DIR` | `fixtures/` | Folder with the six data files (see *Using your own test data*) |
 | `TODAY` | real date | Pin "today" for deadline math, e.g. `TODAY=2026-02-01` |
 | `PORT` / `HOST` | `7860` / `0.0.0.0` | UI server |
 
