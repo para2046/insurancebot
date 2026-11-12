@@ -1,4 +1,5 @@
 """Session state: the single source of truth for phase, gates, memory and counters."""
+import uuid
 from dataclasses import asdict, dataclass, field
 
 VERIFY_ID = "VERIFY_ID"
@@ -54,6 +55,10 @@ class Session:
     email_pref: str | None = None           # send/skip, remembered whenever the caller says it
     pending_handoff: str | None = None      # transfer requested after a case was handled; email offer first
     outbox: list = field(default_factory=list)
+
+    # cross-conversation memory (loaded only after verification)
+    contact_id: str = field(default_factory=lambda: uuid.uuid4().hex[:12])
+    previous_contacts: list = field(default_factory=list)
 
     history: list = field(default_factory=list)          # [{"role", "content"}]
     events: list = field(default_factory=list)           # audit log of controller decisions

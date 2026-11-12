@@ -58,16 +58,20 @@ with gr.Blocks(title="Insurance Claims SOP Agent") as demo:
     with gr.Group():
         with gr.Row(equal_height=True):
             key = gr.Textbox(
-                label="🔑 Your LLM API key (OpenRouter)",
-                placeholder="sk-or-...   Get a key at https://openrouter.ai/keys",
-                info=("The agent's model calls use this key, for your browser session only. It is never stored. "
-                      + ("Leave empty to use the demo's shared key." if config.api_key()
-                         else "Required to chat.")),
+                label="🔑 Your LLM API key: OpenRouter, OpenAI or Anthropic",
+                placeholder="sk-or-…  /  sk-…  /  sk-ant-…",
+                info=("The provider is detected from the key. Used for your browser session only and never "
+                      "stored. " + ("Leave empty to use the demo's shared key."
+                                    if (config.api_key() or config.openai_key() or config.anthropic_key())
+                                    else "Required to chat.")),
                 type="password", scale=4,
                 # stop password managers from auto-filling a saved password into the key field
                 html_attributes=gr.InputHTMLAttributes(autocomplete="new-password", autocorrect="off",
                                                        spellcheck=False, autocapitalize="off"))
-            model = gr.Textbox(label="Model", value=config.MODEL, scale=2)
+            model = gr.Textbox(
+                label="Model (optional)", value="", scale=2,
+                placeholder=f"auto: {config.MODEL} · {config.OPENAI_MODEL} · {config.ANTHROPIC_MODEL}",
+                info="Leave empty to use the default for your key's provider.")
     with gr.Row():
         with gr.Column(scale=3):
             chatbot = gr.Chatbot(height=520, label="Conversation")

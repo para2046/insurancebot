@@ -1,4 +1,6 @@
 gradio==6.31.0
+anthropic==2.8.0
+psycopg[binary]==3.3.8
 openai==3.49.0
 python-dotenv==1.2.4
 pytest

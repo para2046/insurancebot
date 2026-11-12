@@ -9,7 +9,27 @@ Each requirement from the assignment, its design, and the tests that validate it
 - `G:` generated simulated-caller category in `evals/generated.py`
 - `W:` dataset conversations against the deployed website (`evals/run_on_website.py`)
 
-Latest results: U 44/44 · S 39/39 (judge averages: SOP adherence 4.97, grounding 5.0, naturalness 4.9, empathy 4.49, memory 4.97) · D-A 1013/1013 · D-B OK · D-C 31/31 · G 38/40 on an unseen seed (both failures analysed; the real bug is fixed) · W 31/31 (6 runs).
+Latest results: U 49/49 · S 39/39 (judge averages: SOP adherence 4.97, grounding 5.0, naturalness 4.9, empathy 4.49, memory 4.97) · D-A 1013/1013 · D-B OK · D-C 31/31 · G 38/40 on an unseen seed (both failures analysed; the real bug is fixed) · W 31/31 (6 runs).
+
+---
+
+## Scope and design assumptions
+
+The brief describes an **insurance claims *support* agent**: it helps policyholders with claims that already
+exist. The fixtures back this up: there are claims, guidelines for missing documents, follow-up guidance, and
+consent, but no new-claim intake schema or policy coverage data. The agent was designed on these assumptions:
+
+| # | Situation | Assumption / design |
+|---|---|---|
+| A1 | **Filing a new claim** (first notice of loss) | Out of scope for this agent. There's no intake schema, coverage data or policy rules to validate a new claim against, and inventing them would be ungrounded. The agent says it can't file claims here and offers a human representative. (`S: out_of_workflow_request`) |
+| A2 | **Caller doesn't know the claim ID** | Not needed. After verification the agent looks up the caller's claims and matches what they describe ("denied healthcare claim from January", "the car thing from Feb"). A unique match is proposed; otherwise the agent lists the claims and asks. (`S: messy_language_multi_hint`, `ambiguous_hint_lists_choices`) |
+| A3 | **Claim was not accepted (denied)** | Fully supported: the denial reason, the documents needed and how to submit them, alternatives if a document can't be obtained, processing time, and the appeal deadline (with "it has passed" handled honestly). (`D-C guidance_*`, `S: deadline_passed_honesty`) |
+| A4 | **Policyholder has no claims on file** (P7, P13) | The agent says it doesn't see any claims, never invents one, and offers a human. A caller who wants to *file* one is A1. (`S: no_claims_on_file`) |
+| A5 | **Caller isn't in the records** (unknown person / wrong details) | Verification fails without saying which detail is wrong. After 3 failures, the call is handed to a human. Nothing is disclosed. |
+| A6 | **Requests outside claims support** (address change, coverage changes, payments, legal advice, premium questions) | No data or authority for these: the agent says so and offers a human. |
+| A7 | **Actions the agent "performs"** | Sending the summary email and requesting representative consent are simulated, as they are in the fixtures. The agent never claims to have done anything else (no submissions, refunds or appeals filed). |
+| A8 | **Caller memory across conversations** | Kept per verified policyholder (A9), only recalled after re-verification. |
+| A9 | **Data retention** | Up to the last 5 contacts per policyholder: date, caller (policyholder or representative), claim, intent, questions, notes, pending documents, email choice, outcome. No DOB, SSN or ID digits are stored. |
 
 ---
 
@@ -64,7 +84,7 @@ Latest results: U 44/44 · S 39/39 (judge averages: SOP adherence 4.97, groundin
 |---|---|---|---|---|
 | R8a | Remember useful info whenever it's said, even if it belongs to a later phase; stay in VERIFY_ID | Extraction runs in every phase. `Session.memory` holds claim hints, intent, email preference and free-text notes. The phase doesn't change. | U: `test_no_claim_data_reaches_model_before_verification` (hint stored, still VERIFY_ID), `test_free_form_notes_are_remembered_and_used_later`, `test_early_email_decline_is_honored` · S: `claim_question_before_verify_is_remembered` | ✅ |
 | R8b | Use the remembered hint after verification instead of asking from scratch | `_resolve()` scores memory against the claims and proposes the match. | U: `test_demo_case_verifies_and_uses_remembered_hint` · S: `demo_case_full_workflow`, `claim_question_before_verify_is_remembered` | ✅ |
-| R8c | Memory across separate conversations (caller returns another day) | **Not implemented, by design.** Memory lasts for one conversation (per browser session). The assignment's memory requirement is about phases within a call. Cross-call memory would need a database keyed by the verified `party_id`, recalled only after re-verification, with a retention policy. | — | ⚪ Out of scope (can be added) |
+| R8c | Memory across separate conversations (caller returns another day) | `memory_store.py`: a record per verified `party_id` (last 5 contacts), saved after each verified turn and loaded only after the next verification. The agent welcomes the caller back, mentions the last contact, and proposes the same claim if the caller gives no new hint (new hints win). Postgres when hosted (`DATABASE_URL`), SQLite locally. | U: `test_memory_recalled_only_after_verification_in_next_conversation`, `test_memory_not_written_for_unverified_callers`, `test_memory_is_per_policyholder`, `test_new_hints_beat_previous_contact`, `test_same_conversation_updates_its_own_record` · live two-visit check (local and website) | ✅ |
 
 ## Official demo test case
 
@@ -93,7 +113,7 @@ Latest results: U 44/44 · S 39/39 (judge averages: SOP adherence 4.97, groundin
 | # | Requirement | Design | Validated by | Status |
 |---|---|---|---|---|
 | D1 | Hosted demo URL, or Docker image/repo with setup instructions | https://insurancebot-w6cl.onrender.com · repo with Dockerfile, `render.yaml` and README | W: 31/31 against the live URL | ✅ |
-| D2 | Setup accepts an API auth token | A 🔑 field at the top of the UI (each visitor's own key, never stored). `OPENROUTER_API_KEY` env var for self-hosting. | Live check: no key → "please enter your key"; with key → works | ✅ |
+| D2 | Setup accepts an API auth token | A 🔑 field at the top of the UI (each visitor's own key, never stored). The provider is detected from the key: **OpenRouter** (`sk-or-`), **OpenAI** (`sk-`), **Anthropic** (`sk-ant-`, official SDK with structured outputs). Optional server-side env keys for self-hosting. | Live: OpenRouter key works; no key → "please enter your key"; malformed or fake OpenAI/Anthropic keys → clear provider-specific error. ⚠️ The OpenAI and Anthropic success paths are built to their documented APIs but couldn't be tested end to end without those keys. | ✅ / ⚠️ |
 | D3 | Simple test UI with natural-language chat | Gradio chat plus a live SOP-state panel, email outbox and test identities | W, manual | ✅ |
 | D4 | Demo shows the full workflow | README walkthrough (6 steps) + 9 extra scenarios | S: `demo_case_full_workflow` | ✅ |
 
@@ -110,7 +130,8 @@ Latest results: U 44/44 · S 39/39 (judge averages: SOP adherence 4.97, groundin
 | X7 | Robust to malformed model output (strict JSON schema; a failed extraction opens no gates) | Live suites (no crashes since adopting the schema) |
 
 ## Known limitations
-- Memory doesn't persist across separate conversations (R8c).
+- Hosted memory uses Render's free Postgres, which expires 30 days after creation (2026-12-12) unless upgraded. Locally, memory is a SQLite file.
+- The OpenAI and Anthropic providers weren't tested with real keys (none available during development).
 - Email sending and consent requests are simulated, as they are in the fixtures.
 - The free Render instance sleeps when idle, so the first request takes about a minute to wake it.
 - The live suites depend on the model and are nondeterministic. Intermittent issues found on the website were fixed and re-run several times.

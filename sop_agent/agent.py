@@ -13,6 +13,7 @@ import re
 from . import config
 from .data import PII_FIELDS, PII_LABELS, Store, is_complete, mask_email, name_tokens, normalize_pii
 from .extract import extract
+from .memory_store import MemoryStore, get_store
 from .state import (CLOSED, HANDOFF, POST_PROCESS, PROCESS_CASE, RESOLVE_INTENT, VERIFY_ID, Session)
 
 NEGATIVE_EMOTIONS = {"frustrated", "angry", "anxious", "confused", "sad"}
@@ -68,9 +69,10 @@ HUMAN_OFFER = (r"human|representative|specialist|transfer",
 
 
 class Agent:
-    def __init__(self, llm, store: Store | None = None):
+    def __init__(self, llm, store: Store | None = None, memory: MemoryStore | None = None):
         self.llm = llm
         self.store = store or Store()
+        self.memory = memory if memory is not None else get_store()
 
     # ------------------------------------------------------------------ entry point
     def handle(self, s: Session, text: str) -> str:
@@ -89,6 +91,8 @@ class Agent:
             self._remember(s, ex)
             self._route(s, ex, text, t)
             reply = self._guard(s, self._enforce(t, self._respond(s, t)))
+            if s.verified and s.party_id:
+                self.memory.save_contact(s.party_id, self._contact_record(s))
         s.history.append({"role": "assistant", "content": reply})
         return reply
 
@@ -378,6 +382,14 @@ class Agent:
         who = "the representative" if s.caller_role == "representative" else "the caller"
         first = record["name"].split()[0]
         t.say(f"Identity is now verified. Briefly thank {who} (you may use the policyholder's first name, {first}).")
+        s.previous_contacts = [c for c in self.memory.load(s.party_id) if c.get("contact_id") != s.contact_id]
+        if s.previous_contacts:
+            last = s.previous_contacts[0]
+            s.log(f"[VERIFY_ID] recalled {len(s.previous_contacts)} previous contact(s); last {last.get('date')} "
+                  f"about {last.get('case_id') or 'no specific claim'}")
+            t.facts["previous_contacts (from earlier conversations, newest first)"] = s.previous_contacts[:3]
+            t.say("This caller has contacted us before. In one short sentence, welcome them back and mention the "
+                  "most recent contact (its date and the claim discussed). Don't read out personal details.")
         self._resolve(s, ex or {}, text, t, entering=True)
 
     # ------------------------------------------------------------------ RESOLVE_INTENT (flexible, bounded)
@@ -467,6 +479,14 @@ class Agent:
                   "claim and ask them to confirm it's the one: mention case id, type, the date it was filed, "
                   "and its status. Do not go into details yet.")
             return
+        last_case = next((c.get("case_id") for c in s.previous_contacts if c.get("case_id") in valid_ids), None)
+        if not has_hints and last_case and entering:
+            s.candidate_case_id = last_case
+            s.log(f"[RESOLVE_INTENT] no new hints; proposing {last_case} from the previous contact")
+            t.facts["matched_claim"] = self._claim_brief(self.store.claim(s.party_id, last_case))
+            t.say("Ask whether they're calling about the same claim as last time (give case id, type and status), "
+                  "or about something else.")
+            return
         t.facts["claims_on_file"] = [self._claim_brief(c) for c in claims]
         if has_hints:
             t.say("What the caller described matches more than one claim (or none). Briefly list the closest "
@@ -501,6 +521,9 @@ class Agent:
             for c in self.store.claims_for(s.party_id) if c["case_id"] != claim["case_id"]]
         if s.memory["notes"]:
             t.facts["caller_notes_from_earlier"] = s.memory["notes"]
+        earlier = [c for c in s.previous_contacts if c.get("case_id") == claim["case_id"]]
+        if earlier:
+            t.facts["earlier_conversations_about_this_claim"] = earlier[:3]
         intent = ex.get("intent") or s.memory.get("intent") or "general_claim_question"
         if ex.get("question"):
             s.questions_asked.append(ex["question"])
@@ -572,6 +595,26 @@ class Agent:
             t.require(r"email", f"If you're all set, would you like the summary emailed to {masked}, or skip it?")
         else:
             t.say(f"Ask again, simply, whether they'd like the summary emailed to {masked} or prefer to skip it.")
+
+    def _contact_record(self, s: Session) -> dict:
+        """What we keep about this conversation for the policyholder's next contact."""
+        claim = self.store.claim(s.party_id, s.active_case_id) if s.active_case_id else None
+        caller = "policyholder" if s.caller_role == "self" else \
+            f"representative {s.rep_name or ''} ({s.rep_relationship or 'unspecified'})".strip()
+        return {
+            "contact_id": s.contact_id,
+            "date": config.today().isoformat(),
+            "caller": caller,
+            "case_id": claim["case_id"] if claim else None,
+            "case_type": claim["case_type"] if claim else None,
+            "case_status_then": claim["status"] if claim else None,
+            "intent": s.memory.get("intent"),
+            "questions": s.questions_asked[-5:],
+            "notes": [n for n in s.memory.get("notes", []) if "policy number" not in n][-5:],
+            "documents_pending": claim.get("documents_needed", []) if claim else [],
+            "email_summary": s.email_choice,
+            "outcome": {CLOSED: "completed", HANDOFF: "transferred to a human"}.get(s.phase, "in progress"),
+        }
 
     def _finish_email(self, s: Session, t: Turn, choice: str, party: dict) -> None:
         masked = mask_email(party["email"])

@@ -19,7 +19,7 @@ VERIFY_ID  ->  RESOLVE_INTENT  ->  PROCESS_CASE  ->  POST_PROCESS
 
 ### Prerequisites
 - Python 3.11+ (or Docker)
-- An [OpenRouter](https://openrouter.ai) API key. The default model is `openai/gpt-5.6-luna`, which is cheap: a full demo conversation costs well under $0.01.
+- An LLM API key from **OpenRouter** (`sk-or-…`), **OpenAI** (`sk-…`) or **Anthropic** (`sk-ant-…`). The provider is detected from the key. Default models: `openai/gpt-5.6-luna` (OpenRouter), `gpt-5.6-luna` (OpenAI), `claude-opus-5-5` (Anthropic). A demo conversation costs well under $0.01 on the luna models and a few cents on Claude Opus 5.5.
 
 ### Option A — local
 ```bash
@@ -52,10 +52,10 @@ about 15 minutes idle, so the first visit after that takes around a minute to wa
 > from the public repo URL, so pushes need a manual deploy (Render dashboard → **Manual Deploy**, or
 > `POST /v1/services/{id}/deploys` with the Render API).
 
-> **LLM API key:** the agent calls the model through OpenRouter. Visitors enter **their own OpenRouter key** in the
-> 🔑 field at the top of the page. It is used only for their browser session and is never stored. The live demo has
-> **no shared key**, so nobody spends the owner's credit. For a self-hosted copy you can also set
-> `OPENROUTER_API_KEY` (in the environment or `.env`) as a fallback for visitors who leave the field empty.
+> **LLM API key:** visitors paste **their own key** in the 🔑 field at the top of the page: OpenRouter, OpenAI
+> or Anthropic, detected from the key's prefix. It is used only for their browser session and never stored. The live
+> demo has **no shared key**, so nobody spends the owner's credit. For a self-hosted copy you can set
+> `OPENROUTER_API_KEY`, `OPENAI_API_KEY` or `ANTHROPIC_API_KEY` as a fallback for visitors who leave the field empty.
 
 ---
 
@@ -165,7 +165,7 @@ flowchart LR
 | **Out of scope** | Polite refusal with no partial answer, then steer back. Messages that are partly off-topic also count. After 3 strikes, the agent offers a human. |
 | **Emotion** | Detects frustration, anger, anxiety, confusion and sadness. The reply leads with empathy, then explains *why* the step matters (privacy, fraud protection), then offers alternatives (other ID fields, a human). After repeated pushback or sustained anger, it offers a human. **Emotion never opens a gate.** |
 | **Human handoff** | On request, the agent transfers immediately and the notes are passed along. If a verified case was already handled, it settles the email summary first. |
-| **Memory** | Claim hints, intent, email preference and free-form notes ("already asked the lab to resend it") are captured in every phase and used later. |
+| **Memory** | *Within a call:* claim hints, intent, email preference and free-form notes ("already asked the lab to resend it") are captured in every phase and used later. *Across calls:* after verification, a short record of the conversation is saved per policyholder (claim, questions, notes, pending documents, outcome; no DOB/SSN). On the next call it's recalled **only after re-verification**: the agent welcomes them back and proposes the same claim unless they mention a different one. |
 
 ---
 
@@ -176,13 +176,15 @@ insurancebot/
 ├── app.py                      # Gradio UI: chat + SOP state panel + email outbox + settings
 ├── sop_agent/                  # the agent (no UI code)
 │   ├── config.py               # env config: API key, MODEL, TODAY override, SOP thresholds
-│   ├── llm.py                  # OpenRouter client (OpenAI-compatible), retries, strict JSON-schema calls
+│   ├── llm.py                  # provider detection from the key; OpenRouter/OpenAI client, strict JSON-schema calls
+│   ├── anthropic_llm.py        # Anthropic provider (official SDK, structured outputs, refusal fallbacks)
+│   ├── memory_store.py         # cross-conversation caller memory (Postgres via DATABASE_URL, else SQLite)
 │   ├── state.py                # Session dataclass: phase, identity, memory, counters, email, history, event log
 │   ├── data.py                 # fixture Store, PII normalization + matching, grounded claim_facts()
 │   ├── extract.py              # per-turn extraction prompt + strict JSON schema
 │   └── agent.py                # the SOP controller: routing, phase handlers, responder, enforce, guard
 ├── fixtures/                   # provided test data (policyholders, claims, guidelines, reps, consent)
-├── tests/test_gates.py         # 44 deterministic tests with a fake LLM (no API calls)
+├── tests/test_gates.py         # 49 deterministic tests with a fake LLM (no API calls)
 ├── evals/                      # live evaluation suites (call the real model)
 │   ├── common.py               # conversation runner, leak + grounding checks, LLM judge, reports
 │   ├── scripted.py             # 39 hand-written edge cases (one requirement each)
@@ -236,7 +238,7 @@ An LLM judge then grades each conversation against a rubric covering SOP adheren
 
 | Suite | Result (final code) |
 |---|---|
-| Gate tests (offline) | **44/44** |
+| Gate tests (offline) | **49/49** |
 | Identity matrix: every policyholder × field subset × format variants, corruptions, cross-record mixes | **1013/1013** |
 | Fixture integrity | **OK** |
 | Live dataset coverage: every policyholder, every claim's status/amounts, 6 guidance topics × 2 denied claims, both consent scenarios | **31/31** |
@@ -253,13 +255,15 @@ Every requirement is mapped to its design and its tests in [`docs/REQUIREMENTS_T
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `OPENROUTER_API_KEY` | — | Required (or paste one in the UI) |
-| `MODEL` | `openai/gpt-5.6-luna` | Any OpenRouter chat model that supports structured outputs |
+| `OPENROUTER_API_KEY` / `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` | — | Optional server-side fallback keys (visitors can paste their own) |
+| `MODEL` / `OPENAI_MODEL` / `ANTHROPIC_MODEL` | `openai/gpt-5.6-luna` / `gpt-5.6-luna` / `claude-opus-5-5` | Default model per provider (the UI's Model field overrides it) |
+| `DATABASE_URL` | — | Postgres for cross-conversation memory (else SQLite at `MEMORY_DB_PATH`, default `data/caller_memory.db`; `MEMORY_DISABLED=1` turns it off) |
 | `MAX_TOKENS` | `1200` | Per-call cap (keep it set; low-credit keys reject the model maximum) |
 | `TODAY` | real date | Pin "today" for deadline math, e.g. `TODAY=2026-02-01` |
 | `PORT` / `HOST` | `7860` / `0.0.0.0` | UI server |
 
 ## 7. Notes on the data
+- **Scope:** this is a claims *support* agent for existing claims. Filing new claims, policy changes and payments are routed to a human. Every scope assumption (no claim ID, denied claims, no claims on file, unknown callers…) is listed in [`docs/REQUIREMENTS_TRACEABILITY.md`](docs/REQUIREMENTS_TRACEABILITY.md#scope-and-design-assumptions).
 - CL-2048's appeal deadline (2026-03-18) is in the past relative to the real date. The agent says it has passed and offers a human. To demo an open appeal window, set `TODAY=2026-02-01`.
 - CL-3001 needs a "diagnosis report", and `required_document_guideline.json` has no document-specific guidance for it. The agent falls back to the general submission guidance.
 - P7 (Ava Lopez) and P13 (Ya Wen Li) have no claims. After verification, the agent says so and offers a human.

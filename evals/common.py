@@ -8,6 +8,9 @@ from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+# Live suites run conversations independently: no caller memory carried between them unless a test asks.
+import os  # noqa: E402
+os.environ.setdefault("MEMORY_DISABLED", "1")
 
 from sop_agent import config  # noqa: E402
 from sop_agent.agent import Agent  # noqa: E402

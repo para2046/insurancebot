@@ -21,8 +21,23 @@ MAX_PERSUASION_ATTEMPTS = 3
 HISTORY_MESSAGES = 14
 
 
+# Direct-provider settings (used when the visitor's key is an OpenAI or Anthropic key)
+OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-5.6-luna")
+ANTHROPIC_MODEL = os.getenv("ANTHROPIC_MODEL", "claude-opus-5-5")
+
+
 def api_key() -> str | None:
+    """Optional server-side fallback keys (the live demo sets none: visitors bring their own)."""
     return os.getenv("OPENROUTER_API_KEY")
+
+
+def openai_key() -> str | None:
+    return os.getenv("OPENAI_API_KEY")
+
+
+def anthropic_key() -> str | None:
+    return os.getenv("ANTHROPIC_API_KEY")
 
 
 def today() -> date:

@@ -4,11 +4,14 @@ The fake responder records every prompt it receives, which lets us assert that c
 reaches the model before identity verification.
 """
 import json
+import os
+import tempfile
 
 import pytest
 
 from sop_agent.agent import Agent
 from sop_agent.data import Store, name_matches, norm_dob, norm_phone
+from sop_agent.memory_store import MemoryStore
 from sop_agent.state import CLOSED, HANDOFF, POST_PROCESS, PROCESS_CASE, RESOLVE_INTENT, VERIFY_ID, Session
 
 BASE = {
@@ -38,9 +41,13 @@ class FakeLLM:
         return "ok"
 
 
-def run(extractions, session=None):
+def fresh_memory():
+    return MemoryStore(url="", sqlite_path=os.path.join(tempfile.mkdtemp(), "m.db"))
+
+
+def run(extractions, session=None, memory=None):
     llm = FakeLLM(extractions)
-    agent, s = Agent(llm, Store()), session or Session()
+    agent, s = Agent(llm, Store(), memory=memory or fresh_memory()), session or Session()
     for _ in range(len(extractions)):
         agent.handle(s, "msg")
     return s, llm
@@ -355,3 +362,49 @@ def test_caller_can_end_call_before_verification():
 def test_done_while_giving_details_does_not_close():
     s, _ = run([{"pii": {"full_name": "Margaret Chen", "dob": "1985-03-15"}, "done_with_questions": True}])
     assert s.phase == VERIFY_ID
+
+
+# ---------- cross-conversation memory ----------
+
+def test_memory_recalled_only_after_verification_in_next_conversation():
+    mem = fresh_memory()
+    s1, _ = run([MARGARET_OPENING, {"confirmation": "yes"},
+                 {"question": "how do I submit?", "memory_note": "already asked the lab to resend the report"},
+                 {"done_with_questions": True}, {"email_choice": "skip"}], memory=mem)
+    stored = mem.load("P9")
+    assert stored and stored[0]["case_id"] == "CL-2048" and stored[0]["outcome"] == "completed"
+    assert "already asked the lab to resend the report" in stored[0]["notes"]
+
+    # next conversation: nothing recalled before verification
+    s2, llm = run([{"pii": {"full_name": "Margaret Chen"}},
+                   {"pii": {"dob": "1985-03-15", "id_last4": "4472"}}], memory=mem)
+    assert "previous_contacts" not in llm.prompts[0] and "CL-2048" not in llm.prompts[0]
+    # after verification: welcomed back, and the last claim is proposed without any new hint
+    assert s2.previous_contacts and s2.candidate_case_id == "CL-2048"
+    assert "contacted us before" in llm.prompts[1]
+
+
+def test_memory_not_written_for_unverified_callers():
+    mem = fresh_memory()
+    run([{"pii": {"full_name": "Margaret Chen", "dob": "1985-03-15"}, "memory_note": "secret plan"}], memory=mem)
+    assert mem.load("P9") == []
+
+
+def test_memory_is_per_policyholder():
+    mem = fresh_memory()
+    run([MARGARET_OPENING], memory=mem)
+    s, llm = run([{"pii": {"full_name": "Ma Tian", "dob": "1964-09-10", "id_last4": "6688"}}], memory=mem)
+    assert s.party_id == "P12" and s.previous_contacts == [] and "CL-2048" not in llm.prompts[-1]
+
+
+def test_new_hints_beat_previous_contact():
+    mem = fresh_memory()
+    run([MARGARET_OPENING, {"confirmation": "yes"}], memory=mem)            # last time: CL-2048
+    s, _ = run([{"pii": MARGARET_OPENING["pii"], "case_hints": {"case_type": "auto"}}], memory=mem)
+    assert s.candidate_case_id == "CL-2102"
+
+
+def test_same_conversation_updates_its_own_record():
+    mem = fresh_memory()
+    run([MARGARET_OPENING, {"confirmation": "yes"}, {"question": "q1"}, {"question": "q2"}], memory=mem)
+    assert len(mem.load("P9")) == 1
