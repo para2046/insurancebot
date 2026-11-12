@@ -13,6 +13,18 @@ VERIFY_ID  ->  RESOLVE_INTENT  ->  PROCESS_CASE  ->  POST_PROCESS
 - **Memory across phases.** Anything useful the caller says is remembered and used later. If they say "my denied healthcare claim from January" during verification, the agent stays in VERIFY_ID but uses that hint as soon as the caller is verified.
 - **Guardrails throughout.** It politely refuses off-topic questions, responds with empathy and de-escalates, explains why each step is required, and transfers to a human when needed.
 
+### Documents in this repo
+
+| Document | What it covers |
+|---|---|
+| [`README.md`](README.md) (this file) | How to run and use the demo, the method, the code structure, test results, configuration |
+| [`docs/REQUIREMENTS_TRACEABILITY.md`](docs/REQUIREMENTS_TRACEABILITY.md) | **Design document:** scope and assumptions (existing-claims support, no claim ID, denied claims, no claims, unknown callers…), then every requirement from the brief mapped to its design, the tests that validate it, and its status |
+| [`evals/reports/SUMMARY.md`](evals/reports/SUMMARY.md) | Test results across all suites, and the bugs the tests found and how each was fixed |
+| [`evals/reports/`](evals/reports/) | Full reports with every test conversation transcript (`scripted-*`, `generated-*`, `dataset-*`, `website-*`; `.md` to read, `.json` raw) |
+| [`fixtures/`](fixtures/) | The provided test data (policyholders, claims, guidelines, representatives, consent scenarios) |
+| [`.env.example`](.env.example) | Optional settings (fallback API keys, default models, `TODAY`) |
+| [`render.yaml`](render.yaml), [`Dockerfile`](Dockerfile) | Hosting: the Render blueprint and the container image |
+
 ---
 
 ## 1. Run the demo
@@ -185,6 +197,8 @@ insurancebot/
 │   ├── data.py                 # fixture Store, PII normalization + matching, grounded claim_facts()
 │   ├── extract.py              # per-turn extraction prompt + strict JSON schema
 │   └── agent.py                # the SOP controller: routing, phase handlers, responder, enforce, guard
+├── docs/
+│   └── REQUIREMENTS_TRACEABILITY.md   # design doc: assumptions + requirement → design → tests
 ├── fixtures/                   # provided test data (policyholders, claims, guidelines, reps, consent)
 ├── tests/test_gates.py         # 51 deterministic tests with a fake LLM (no API calls)
 ├── evals/                      # live evaluation suites (call the real model)
@@ -196,9 +210,10 @@ insurancebot/
 │   ├── dataset_validation.py   # exhaustive identity matrix, fixture integrity, live dataset coverage
 │   ├── run_on_website.py       # runs the dataset conversations against a deployed URL
 │   └── reports/                # final reports (SUMMARY.md + transcripts)
-├── Dockerfile
+├── Dockerfile                  # container image (used by Render and `docker run`)
+├── render.yaml                 # Render blueprint (free Docker web service)
 ├── requirements.txt
-└── .env.example
+└── .env.example                # optional settings, all commented out
 ```
 
 ### Key entry points in `sop_agent/agent.py`

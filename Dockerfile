@@ -9,5 +9,5 @@ USER appuser
 EXPOSE 7860
 # Gradio shuts down cleanly on Ctrl-C (SIGINT); the default SIGTERM would be ignored and force-killed
 STOPSIGNAL SIGINT
-# Pass the key at runtime:  docker run -e OPENROUTER_API_KEY=sk-or-... -p 7860:7860 insurance-sop-agent
+# Visitors paste their own key in the UI. Optional fallback: docker run -e OPENROUTER_API_KEY=... -p 7860:7860 insurancebot
 CMD ["python", "app.py"]
