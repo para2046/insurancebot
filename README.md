@@ -93,8 +93,11 @@ FIXTURES_DIR=/path/to/my_data .venv/bin/python evals/dataset_validation.py --off
 
 New claim statuses, case types and documents work without code changes. This was tested with an extra
 policyholder, a `pending` home claim, and a document that has no guidance entry. The **Test identities** tab in the
-UI shows exactly which records are loaded. The hosted demo uses the sample data; to host your own data, fork the
-repo and replace `fixtures/`, or set `FIXTURES_DIR` on your deployment.
+UI shows exactly which records are loaded.
+
+> **The hosted demo always runs on the sample data in `fixtures/`.** Editing fixture files on your side doesn't
+> change it. To test with other data, use the local or Docker setup above with `FIXTURES_DIR`, or fork the repo,
+> replace `fixtures/` and deploy your fork.
 
 > **LLM API key:** visitors paste **their own key** in the 🔑 field at the top of the page: OpenRouter, OpenAI
 > or Anthropic, detected from the key's prefix. It is used only for their browser session and never stored. The live
