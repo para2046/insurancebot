@@ -24,7 +24,8 @@ Return ONLY a JSON object with exactly these keys:
 "intent": one of {INTENTS} or null.
 "claim_selection": a case_id from CANDIDATE_CLAIMS that the caller clearly refers to, else null.
 "confirmation": "yes" | "no" | null - answer to the agent's last yes/no question, if any.
-"done_with_questions": true if the caller indicates they have no more questions / are finished.
+"done_with_questions": true if the caller indicates they have no more questions, are finished, or want to
+   end the conversation (in any language).
 "email_choice": "send" if the caller asks for or accepts an email summary of the call; "skip" if they decline
    it; else null.
 "requested_email": an email address the caller asks the summary to be sent to, else null.

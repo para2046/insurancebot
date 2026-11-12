@@ -344,3 +344,14 @@ def test_malformed_phone_is_flagged_even_when_other_details_fail():
 def test_full_id_number_gets_privacy_reminder():
     s, llm = run([{"pii": {"full_name": "Margaret Chen", "id_last4": "178623544472"}}])
     assert s.collected["id_last4"] == "4472" and "only the last 4 digits" in llm.prompts[-1]
+
+
+def test_caller_can_end_call_before_verification():
+    s, llm = run([{"pii": {"full_name": "Margaret Chen"}}, {"done_with_questions": True}])
+    assert s.phase == CLOSED and not s.verified and s.outbox == []
+    assert "Do NOT ask for verification" in llm.prompts[-1]
+
+
+def test_done_while_giving_details_does_not_close():
+    s, _ = run([{"pii": {"full_name": "Margaret Chen", "dob": "1985-03-15"}, "done_with_questions": True}])
+    assert s.phase == VERIFY_ID

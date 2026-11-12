@@ -164,6 +164,17 @@ class Agent:
             t.say("The caller has been upset for several turns. After empathizing, also offer the option of "
                   "speaking with a human representative, while making clear you're glad to keep helping.")
 
+        # The caller may leave at any time. Gates protect claim data; they never hold a caller in the call.
+        gave_details = any(ex["pii"].get(f) for f in PII_FIELDS)
+        if (ex.get("done_with_questions") and not ex.get("question") and not gave_details
+                and s.phase in (VERIFY_ID, RESOLVE_INTENT)):
+            s.log(f"[{s.phase}] caller ended the conversation before a claim was handled -> CLOSED")
+            s.phase = CLOSED
+            t.say("The caller wants to end the conversation. Do NOT ask for verification or anything else. Thank "
+                  "them warmly, say they're welcome to reach out any time if they need help with a claim, and say "
+                  "goodbye.")
+            return
+
         handler = {VERIFY_ID: self._verify, RESOLVE_INTENT: self._resolve,
                    PROCESS_CASE: self._process, POST_PROCESS: self._post}[s.phase]
         handler(s, ex, text, t)
