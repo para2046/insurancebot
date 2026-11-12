@@ -46,6 +46,12 @@ Click the button, or go to Render → **New → Blueprint** and pick this repo. 
 service. Paste your OpenRouter key when Render asks for `OPENROUTER_API_KEY`. Free instances sleep after
 about 15 minutes idle, so the first visit after that takes around a minute to wake up.
 
+**Live demo:** https://insurancebot-w6cl.onrender.com
+
+> Auto-deploy on push only works if the repo is connected through Render's GitHub app. The live demo was created
+> from the public repo URL, so pushes need a manual deploy (Render dashboard → **Manual Deploy**, or
+> `POST /v1/services/{id}/deploys` with the Render API).
+
 > **API key:** the app reads `OPENROUTER_API_KEY` from the environment or `.env`. You can also paste a key in the
 > UI under **Settings**, which overrides the environment key for that session. The model can be changed there too, or with `MODEL=...`.
 
@@ -171,7 +177,7 @@ insurancebot/
 │   ├── extract.py              # per-turn extraction prompt + strict JSON schema
 │   └── agent.py                # the SOP controller: routing, phase handlers, responder, enforce, guard
 ├── fixtures/                   # provided test data (policyholders, claims, guidelines, reps, consent)
-├── tests/test_gates.py         # 36 deterministic tests with a fake LLM (no API calls)
+├── tests/test_gates.py         # 40 deterministic tests with a fake LLM (no API calls)
 ├── evals/                      # live evaluation suites (call the real model)
 │   ├── common.py               # conversation runner, leak + grounding checks, LLM judge, reports
 │   ├── scripted.py             # 34 hand-written edge cases (one requirement each)
@@ -179,6 +185,7 @@ insurancebot/
 │   ├── generated.py            # persona generator + LLM caller simulator
 │   ├── run_generated.py
 │   ├── dataset_validation.py   # exhaustive identity matrix, fixture integrity, live dataset coverage
+│   ├── run_on_website.py       # runs the dataset conversations against a deployed URL
 │   └── reports/                # final reports (SUMMARY.md + transcripts)
 ├── Dockerfile
 ├── requirements.txt
@@ -212,6 +219,7 @@ and `required` (content that must appear in the reply).
 .venv/bin/python evals/dataset_validation.py              # + live conversations over every fixture record
 .venv/bin/python evals/run_scripted.py                    # 34 edge cases + LLM judge
 .venv/bin/python evals/run_generated.py --n 40 --seed 23  # 40 LLM-simulated callers + LLM judge
+.venv/bin/python evals/run_on_website.py [URL]            # dataset conversations against a deployed site (browser-style)
 ```
 The live suites cost about $0.01–0.02 per conversation (the judge model, `gpt-5.6-terra`, is most of that).
 
@@ -223,12 +231,13 @@ An LLM judge then grades each conversation against a rubric covering SOP adheren
 
 | Suite | Result (final code) |
 |---|---|
-| Gate tests (offline) | **36/36** |
+| Gate tests (offline) | **40/40** |
 | Identity matrix: every policyholder × field subset × format variants, corruptions, cross-record mixes | **1013/1013** |
 | Fixture integrity | **OK** |
 | Live dataset coverage: every policyholder, every claim's status/amounts, 6 guidance topics × 2 denied claims, both consent scenarios | **31/31** |
 | Scripted edge cases | **33/34** in the full run. The one miss was an over-strict keyword check (the judge scored the reply 5/5); fixed |
 | Simulated callers, unseen seed | **38/40** in the full run. One real bug, now fixed; one simulator hang-up |
+| Dataset coverage on the **live website** (browser-style calls) | **31/31**, twice in a row after the fixes below |
 
 Details, transcripts, and the list of bugs these tests found are in [`evals/reports/SUMMARY.md`](evals/reports/SUMMARY.md).
 

@@ -4,7 +4,7 @@ Model under test: `openai/gpt-5.6-luna` · judge: `openai/gpt-5.6-terra` · simu
 
 | Suite | What it covers | Result |
 |---|---|---|
-| `pytest tests` | 36 deterministic gate tests (fake LLM): verification rules, leak prevention, memory, consent, scope, email flow | **36/36** |
+| `pytest tests` | 40 deterministic gate tests (fake LLM): verification rules, leak prevention, memory, consent, scope, email flow | **40/40** |
 | Dataset A (offline) | Identity matrix: 4 policyholders × all field subsets × format variants, corruptions, cross-record mixes | **1013/1013** |
 | Dataset B (offline) | Fixture integrity: document mapping, templates, representatives, consent | **OK** |
 | Dataset C (live) | Every policyholder (3 field combinations each), every claim's status and amounts, all 6 guidance topics × 2 denied claims, both consent scenarios | **31/31** |
@@ -24,3 +24,17 @@ Earlier runs on seeds 7 and 11 (used during development): 18/40 → 34/40 → 36
 - Partial identity answers were counted as wrong answers. They now get a clarifying question.
 - The agent speculated: late appeals "may be possible", denials "not about exclusions", a new claim "may not be in the system yet". The prompts now forbid speculation.
 - CL-3001's "diagnosis report" has no guidance entry in the fixtures. It now falls back to the general guidance.
+
+## Deployed website (https://insurancebot-w6cl.onrender.com)
+
+`evals/run_on_website.py` runs the 31 dataset conversations through the site's web API, the way a browser does
+(fresh session, settings fields left empty).
+
+| Run | Result | What happened |
+|---|---|---|
+| First deploy | every message failed | `app.py` called `.strip()` on the API-key field, which the browser sends as `None`. Tests had always passed `""`. Fixed. |
+| 1st website run | 30/31 | A closed dental claim (CL-1899) was described with another claim's denial reason, then the agent switched claims because it was misled by its own reply. Fixed: status-specific overview built in code, no summaries of other claims, and switching needs the caller's own words. |
+| 2nd website run | 30/31 | Authorized rep David Chen was rejected: a later turn overwrote his name with "David". Fixed: keep the most complete name; accept first-name matches (consent is still required). |
+| 3rd and 4th website runs | **31/31**, **31/31** | — |
+
+Also found: auto-deploy on push wasn't active, because the service wasn't created through Render's GitHub app. Deploys are triggered manually.

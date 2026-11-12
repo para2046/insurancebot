@@ -1,0 +1,362 @@
+[
+ {
+  "name": "ambiguous_hint_lists_choices",
+  "category": "resolve",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "January healthcare is ambiguous (2025 vs 2026); caller picks 2025 -> CL-2011 | phase=PROCESS_CASE verified=True active=CL-2011 handoff_offered=False"
+   }
+  },
+  "judge": {
+   "pass": true,
+   "scores": {
+    "sop_adherence": 5,
+    "grounding": 5,
+    "naturalness": 5,
+    "empathy": 4,
+    "memory": 5
+   },
+   "issues": []
+  },
+  "transcript": [
+   [
+    "caller",
+    "Margaret Chen, 1985-03-15, SSN 4472. It's about my healthcare claim from January.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. I found two healthcare claims from January:\n\n- Filed January 12, 2026 \u2014 denied\n- Filed January 28, 2025 \u2014 closed\n\nWhich one are you calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "The one from 2025.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "Your healthcare claim filed January 28, 2025, is closed and completed. It was settled, and the insurance company paid $780 out of the $800 maximum allowed for the covered service. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "margaret chen",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": "closed",
+    "month": "January",
+    "year": "2025",
+    "case_id": "CL-2011",
+    "intent": "general_claim_question",
+    "notes": []
+   },
+   "candidate_case_id": null,
+   "active_case_id": "CL-2011",
+   "questions_asked": [],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, month=January, intent=general_claim_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered status=closed, year=2025, case_id=CL-2011",
+    "[RESOLVE_INTENT] active case CL-2011 (intent=general_claim_question) -> PROCESS_CASE"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "caller_rejects_candidate",
+  "category": "resolve",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "switched to dental CL-1899 | phase=PROCESS_CASE verified=True active=CL-1899 handoff_offered=False"
+   },
+   "reply2_mentions:425": {
+    "passed": true,
+    "detail": "expected one of ['425']"
+   }
+  },
+  "judge": {
+   "pass": true,
+   "scores": {
+    "sop_adherence": 5,
+    "grounding": 5,
+    "naturalness": 5,
+    "empathy": 5,
+    "memory": 5
+   },
+   "issues": []
+  },
+  "transcript": [
+   [
+    "caller",
+    "I'm the policyholder. My name is Margaret Chen, policy POL-9921. I'm calling about my denied healthcare claim from January. DOB is 1985-03-15, SSN last four is 4472.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. I found a matching healthcare claim filed on January 12, 2026, with case ID CL-2048, and its status is denied. Can you confirm this is the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "No, actually I meant my dental claim.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "Sorry for the mix-up. Your dental claim, CL-1899, filed November 3, 2025, is closed and completed. The insurance company paid $425, compared with the allowed maximum of $450. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "Yes, how much did they pay?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "The insurance company\u2019s finalized payment for your dental claim was $425. Is there anything else you\u2019d like to know about this claim?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "margaret chen",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "dental",
+    "status": null,
+    "month": null,
+    "year": null,
+    "case_id": "CL-1899",
+    "intent": "general_claim_question",
+    "notes": [
+     "caller gave policy number POL-9921 (not a verification field)"
+    ]
+   },
+   "candidate_case_id": null,
+   "active_case_id": "CL-1899",
+   "questions_asked": [
+    "How much did the insurance company pay for the dental claim?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, status=denied, month=January, intent=denial_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-2048",
+    "[RESOLVE_INTENT] remembered case_type=dental, case_id=CL-1899",
+    "[RESOLVE_INTENT] caller rejected CL-2048",
+    "[RESOLVE_INTENT] active case CL-1899 (intent=denial_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=general_claim_question"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "switch_claim_midway",
+  "category": "process",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "switched to CL-2102 | phase=PROCESS_CASE verified=True active=CL-2102 handoff_offered=False"
+   }
+  },
+  "judge": {
+   "pass": true,
+   "scores": {
+    "sop_adherence": 5,
+    "grounding": 5,
+    "naturalness": 5,
+    "empathy": 5,
+    "memory": 5
+   },
+   "issues": []
+  },
+  "transcript": [
+   [
+    "caller",
+    "I'm the policyholder. My name is Margaret Chen, policy POL-9921. I'm calling about my denied healthcare claim from January. DOB is 1985-03-15, SSN last four is 4472.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. I found the matching healthcare claim, case CL-2048, filed on January 12, 2026, and its status is denied. Can you confirm this is the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "yes",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry\u2014that\u2019s frustrating news. Claim CL-2048 was denied because the review file was missing the pathology report and the treating provider\u2019s office note. The easiest way to submit them is through the member portal or claim upload link; make sure each file is complete and readable, with the claim details, relevant dates, and provider or facility information visible when available. The appeal deadline was March 18, 2026, and has passed; I don\u2019t have information about late appeals, but a human claims representative can look into that. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "Also, what's going on with my auto claim?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "Switching to auto claim CL-2102. It was filed February 28, 2026, is still open, and is described as an auto claim in progress. The system shows an expected insurance payment of $3,200, a maximum covered payment of $3,500, no finalized payment yet, and an adjusted fee amount of $3,500. Is there anything else you\u2019d like to know about this claim?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "margaret chen",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": "denied",
+    "month": "January",
+    "year": "2026",
+    "case_id": "CL-2048",
+    "intent": "status_inquiry",
+    "notes": [
+     "caller gave policy number POL-9921 (not a verification field)"
+    ]
+   },
+   "candidate_case_id": "CL-2048",
+   "active_case_id": "CL-2102",
+   "questions_asked": [
+    "What is the status of my auto claim?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, status=denied, month=January, intent=denial_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-2048",
+    "[RESOLVE_INTENT] remembered year=2026, case_id=CL-2048",
+    "[RESOLVE_INTENT] active case CL-2048 (intent=denial_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=status_inquiry",
+    "[PROCESS_CASE] switched to CL-2102"
+   ]
+  },
+  "outbox": []
+ }
+]

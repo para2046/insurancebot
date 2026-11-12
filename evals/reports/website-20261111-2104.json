@@ -1,0 +1,3275 @@
+[
+ {
+  "name": "verify_P9_full_name+dob+id_last4",
+  "category": "identity",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "verified as P9"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Chen Margaret, date of birth March 15, 1985, SSN last four 4472. What's the status of my claim?",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. I have several claims on file\u2014could you tell me which one you mean?\n\n- Auto claim filed February 28, 2026 \u2014 open\n- Healthcare claim filed January 12, 2026 \u2014 denied\n- Dental claim filed November 3, 2025 \u2014 closed\n- Healthcare claim filed January 28, 2025 \u2014 closed",
+    "RESOLVE_INTENT",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "RESOLVE_INTENT",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "chen margaret",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": null,
+    "status": null,
+    "month": null,
+    "year": null,
+    "case_id": null,
+    "intent": "status_inquiry",
+    "notes": []
+   },
+   "candidate_case_id": null,
+   "active_case_id": null,
+   "questions_asked": [],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered intent=status_inquiry",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "verify_P9_full_name+phone+email",
+  "category": "identity",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "verified as P9"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Chen Margaret, phone (650) 521-2836, email margaret@email.com. What's the status of my claim?",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. Which claim would you like to ask about?\n\n- Auto claim filed February 28, 2026 \u2014 open\n- Healthcare claim filed January 12, 2026 \u2014 denied\n- Dental claim filed November 3, 2025 \u2014 closed\n- Healthcare claim filed January 28, 2025 \u2014 closed",
+    "RESOLVE_INTENT",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "RESOLVE_INTENT",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "chen margaret",
+    "phone": "\u2022\u2022\u202236",
+    "email": "margaret@email.com"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": null,
+    "status": null,
+    "month": null,
+    "year": null,
+    "case_id": null,
+    "intent": "status_inquiry",
+    "notes": []
+   },
+   "candidate_case_id": null,
+   "active_case_id": null,
+   "questions_asked": [],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered intent=status_inquiry",
+    "[VERIFY_ID] received full_name, phone, email",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "verify_P9_dob+email+id_last4",
+  "category": "identity",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "verified as P9"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, date of birth March 15, 1985, email margaret@email.com, SSN last four 4472. What's the status of my claim?",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. Which claim are you asking about?\n\n- Auto claim filed February 28, 2026 \u2014 open\n- Healthcare claim filed January 12, 2026 \u2014 denied\n- Dental claim filed November 3, 2025 \u2014 closed\n- Healthcare claim filed January 28, 2025 \u2014 closed",
+    "RESOLVE_INTENT",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "RESOLVE_INTENT",
+   "consent_scenario": "default",
+   "collected": {
+    "dob": "\u2022\u2022\u202215",
+    "email": "margaret@email.com",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": null,
+    "status": null,
+    "month": null,
+    "year": null,
+    "case_id": null,
+    "intent": "status_inquiry",
+    "notes": []
+   },
+   "candidate_case_id": null,
+   "active_case_id": null,
+   "questions_asked": [],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered intent=status_inquiry",
+    "[VERIFY_ID] received dob, email, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "verify_P7_full_name+dob+id_last4",
+  "category": "identity",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "verified as P7 and told no claims on file"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Lopez Ava, date of birth August 21, 1990, SSN last four 9180. What's the status of my claim?",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Ava. I don\u2019t see any claims on file under your policy. I can connect you with a human representative who can look into this further.",
+    "RESOLVE_INTENT",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "RESOLVE_INTENT",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "lopez ava",
+    "dob": "\u2022\u2022\u202221",
+    "id_last4": "\u2022\u2022\u202280"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P7",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": null,
+    "status": null,
+    "month": null,
+    "year": null,
+    "case_id": null,
+    "intent": "status_inquiry",
+    "notes": []
+   },
+   "candidate_case_id": null,
+   "active_case_id": null,
+   "questions_asked": [],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": true,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered intent=status_inquiry",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P7 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] no claims on file for this policyholder"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "verify_P7_full_name+phone+email",
+  "category": "identity",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "verified as P7 and told no claims on file"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Lopez Ava, phone (650) 388-2920, email ava.lopez@email.com. What's the status of my claim?",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Ava. I don\u2019t see any claims on file under your policy. I can connect you with a human representative who can look into this further.",
+    "RESOLVE_INTENT",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "RESOLVE_INTENT",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "lopez ava",
+    "phone": "\u2022\u2022\u202220",
+    "email": "ava.lopez@email.com"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P7",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": null,
+    "status": null,
+    "month": null,
+    "year": null,
+    "case_id": null,
+    "intent": "status_inquiry",
+    "notes": []
+   },
+   "candidate_case_id": null,
+   "active_case_id": null,
+   "questions_asked": [],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": true,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered intent=status_inquiry",
+    "[VERIFY_ID] received full_name, phone, email",
+    "[VERIFY_ID] verified party P7 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] no claims on file for this policyholder"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "verify_P7_dob+email+id_last4",
+  "category": "identity",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "verified as P7 and told no claims on file"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, date of birth August 21, 1990, email ava.lopez@email.com, SSN last four 9180. What's the status of my claim?",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Ava. I don\u2019t see any claims on file under your policy, but I can connect you with a human representative who can look into this further.",
+    "RESOLVE_INTENT",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "RESOLVE_INTENT",
+   "consent_scenario": "default",
+   "collected": {
+    "dob": "\u2022\u2022\u202221",
+    "email": "ava.lopez@email.com",
+    "id_last4": "\u2022\u2022\u202280"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P7",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": null,
+    "status": null,
+    "month": null,
+    "year": null,
+    "case_id": null,
+    "intent": "status_inquiry",
+    "notes": []
+   },
+   "candidate_case_id": null,
+   "active_case_id": null,
+   "questions_asked": [],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": true,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered intent=status_inquiry",
+    "[VERIFY_ID] received dob, email, id_last4",
+    "[VERIFY_ID] verified party P7 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] no claims on file for this policyholder"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "verify_P12_full_name+dob+id_last4",
+  "category": "identity",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "verified as P12"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Tian Ma, date of birth September 10, 1964, national ID last four 6688. What's the status of my claim?",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thanks, Ma. I see one claim on file: a healthcare claim filed March 1, 2026, with a status of denied. Is that the claim you\u2019re calling about today?",
+    "RESOLVE_INTENT",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "RESOLVE_INTENT",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "tian ma",
+    "dob": "\u2022\u2022\u202210",
+    "id_last4": "\u2022\u2022\u202288"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P12",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": null,
+    "status": null,
+    "month": null,
+    "year": null,
+    "case_id": null,
+    "intent": "status_inquiry",
+    "notes": []
+   },
+   "candidate_case_id": null,
+   "active_case_id": null,
+   "questions_asked": [],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered intent=status_inquiry",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P12 -> RESOLVE_INTENT"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "verify_P12_full_name+phone+email",
+  "category": "identity",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "verified as P12"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Tian Ma, phone (650) 208-8799, email matian@example.com. What's the status of my claim?",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Ma. I see one healthcare claim filed on March 1, 2026; its status is denied. What would you like help with regarding that claim today?",
+    "RESOLVE_INTENT",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "RESOLVE_INTENT",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "tian ma",
+    "phone": "\u2022\u2022\u202299",
+    "email": "matian@example.com"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P12",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": null,
+    "status": null,
+    "month": null,
+    "year": null,
+    "case_id": null,
+    "intent": "status_inquiry",
+    "notes": []
+   },
+   "candidate_case_id": null,
+   "active_case_id": null,
+   "questions_asked": [],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered intent=status_inquiry",
+    "[VERIFY_ID] received full_name, phone, email",
+    "[VERIFY_ID] verified party P12 -> RESOLVE_INTENT"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "verify_P12_dob+email+id_last4",
+  "category": "identity",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "verified as P12"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, date of birth September 10, 1964, email matian@example.com, national ID last four 6688. What's the status of my claim?",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thanks, Ma\u2014your identity is verified. I see one healthcare claim filed March 1, 2026; its status is denied. Is that the claim you\u2019re calling about today?",
+    "RESOLVE_INTENT",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "RESOLVE_INTENT",
+   "consent_scenario": "default",
+   "collected": {
+    "dob": "\u2022\u2022\u202210",
+    "email": "matian@example.com",
+    "id_last4": "\u2022\u2022\u202288"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P12",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": null,
+    "status": null,
+    "month": null,
+    "year": null,
+    "case_id": null,
+    "intent": "status_inquiry",
+    "notes": []
+   },
+   "candidate_case_id": null,
+   "active_case_id": null,
+   "questions_asked": [],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered intent=status_inquiry",
+    "[VERIFY_ID] received dob, email, id_last4",
+    "[VERIFY_ID] verified party P12 -> RESOLVE_INTENT"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "verify_P13_full_name+dob+id_last4",
+  "category": "identity",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "verified as P13 and told no claims on file"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Yaven Li, date of birth December 3, 1989, national ID last four 5317. What's the status of my claim?",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Ya. I don\u2019t see any claims on file under your policy. I can connect you with a human representative who can look into this further.",
+    "RESOLVE_INTENT",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "RESOLVE_INTENT",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "yaven li",
+    "dob": "\u2022\u2022\u202203",
+    "id_last4": "\u2022\u2022\u202217"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P13",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": null,
+    "status": null,
+    "month": null,
+    "year": null,
+    "case_id": null,
+    "intent": "status_inquiry",
+    "notes": []
+   },
+   "candidate_case_id": null,
+   "active_case_id": null,
+   "questions_asked": [],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": true,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered intent=status_inquiry",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P13 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] no claims on file for this policyholder"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "verify_P13_full_name+phone+email",
+  "category": "identity",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "verified as P13 and told no claims on file"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Yaven Li, phone (650) 521-2830, email yawen.li@gmail.com. What's the status of my claim?",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Ya. I don\u2019t see any claims on file under your policy. I can connect you with a human representative who can look into this further.",
+    "RESOLVE_INTENT",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "RESOLVE_INTENT",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "yaven li",
+    "phone": "\u2022\u2022\u202230",
+    "email": "yawen.li@gmail.com"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P13",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": null,
+    "status": null,
+    "month": null,
+    "year": null,
+    "case_id": null,
+    "intent": "status_inquiry",
+    "notes": []
+   },
+   "candidate_case_id": null,
+   "active_case_id": null,
+   "questions_asked": [],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": true,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered intent=status_inquiry",
+    "[VERIFY_ID] received full_name, phone, email",
+    "[VERIFY_ID] verified party P13 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] no claims on file for this policyholder"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "verify_P13_dob+email+id_last4",
+  "category": "identity",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "verified as P13 and told no claims on file"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, date of birth December 3, 1989, email yawen.li@gmail.com, national ID last four 5317. What's the status of my claim?",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Ya. I don\u2019t see any claims on file under your policy. I can connect you with a human representative who can look into this further.",
+    "RESOLVE_INTENT",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "RESOLVE_INTENT",
+   "consent_scenario": "default",
+   "collected": {
+    "dob": "\u2022\u2022\u202203",
+    "email": "yawen.li@gmail.com",
+    "id_last4": "\u2022\u2022\u202217"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P13",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": null,
+    "status": null,
+    "month": null,
+    "year": null,
+    "case_id": null,
+    "intent": "status_inquiry",
+    "notes": []
+   },
+   "candidate_case_id": null,
+   "active_case_id": null,
+   "questions_asked": [],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": true,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered intent=status_inquiry",
+    "[VERIFY_ID] received dob, email, id_last4",
+    "[VERIFY_ID] verified party P13 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] no claims on file for this policyholder"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "claim_CL-2048_overview",
+  "category": "claim_facts",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "resolved to CL-2048"
+   },
+   "reply0_mentions:CL-2048": {
+    "passed": true,
+    "detail": "expected one of ['CL-2048']"
+   },
+   "reply2_mentions:denied": {
+    "passed": true,
+    "detail": "expected one of ['denied']"
+   },
+   "replyany_mentions:pathology report": {
+    "passed": true,
+    "detail": "expected one of ['pathology report', 'office note']"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Chen Margaret, date of birth March 15, 1985, SSN last four 4472. I'm calling about my healthcare claim from January 2026.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. I found the matching healthcare claim, case ID CL-2048, filed January 12, 2026, and its status is denied. Can you confirm this is the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "Yes, that's the one.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry\u2014that\u2019s frustrating news. Claim CL-2048 was denied because the review file did not include the pathology report and the treating provider\u2019s office note. The easiest way to submit them is through the member portal or claim upload link; make sure each file is complete and readable, with the claim details, relevant dates, and provider or facility information visible. The appeal deadline was March 18, 2026, and has passed; I don\u2019t have information about late appeals, but a human claims representative can look into that with you. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "What's the status, and how much was paid or can I expect?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "Claim CL-2048 is currently denied. The records show that the insurance company finalized payment at **$0.00**, and the expected reimbursement is also **$0.00**. Is there anything else about this claim I can help clarify?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "chen margaret",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": "denied",
+    "month": "January",
+    "year": "2026",
+    "case_id": "CL-2048",
+    "intent": "status_inquiry",
+    "notes": []
+   },
+   "candidate_case_id": "CL-2048",
+   "active_case_id": "CL-2048",
+   "questions_asked": [
+    "What is the claim status, and how much was paid or can be expected?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, month=January, year=2026, intent=general_claim_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-2048",
+    "[RESOLVE_INTENT] remembered status=denied, case_id=CL-2048",
+    "[RESOLVE_INTENT] active case CL-2048 (intent=general_claim_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=status_inquiry"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "guidance_CL-2048_missing_required_material_alternatives",
+  "category": "guidance",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "resolved to CL-2048"
+   },
+   "reply2_mentions:replacement": {
+    "passed": true,
+    "detail": "expected one of ['replacement', 'copy', 'substitute', 'human']"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Chen Margaret, date of birth March 15, 1985, SSN last four 4472. I'm calling about my healthcare claim from January 2026.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. I found a matching healthcare claim, case **CL-2048**, filed on **January 12, 2026**. Its status is **denied**. Is this the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "Yes.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry\u2014that\u2019s frustrating news. Claim CL-2048 was denied because the review file didn\u2019t include the **pathology report** and **treating provider\u2019s office note**. The easiest way to submit them is through the member portal or claim upload link; make sure each file is complete and readable, with the relevant dates and provider or facility name visible where available. The appeal deadline was **March 18, 2026**, and it has passed; I don\u2019t have information about late appeals, but a human claims representative can look into that with you. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "What if I can't get one of the documents?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "I understand that getting a medical record can be difficult. If you can\u2019t get the **pathology report**, ask the hospital, lab, or treating provider for a replacement or for it to be resent; a complete, readable scan or certified copy may be an interim substitute while mailing requirements are clarified. If you can\u2019t get the **office note**, ask the clinic for a complete visit summary, discharge paperwork, or a resent copy of the chart. If the provider cannot supply the document or any readable substitute, a human claims representative should review what manual options or other clinical records may be acceptable. Is there anything else about claim CL-2048 I can help with?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "chen margaret",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": null,
+    "month": "January",
+    "year": "2026",
+    "case_id": null,
+    "intent": "next_steps",
+    "notes": []
+   },
+   "candidate_case_id": "CL-2048",
+   "active_case_id": "CL-2048",
+   "questions_asked": [
+    "What to do if one of the required claim documents cannot be obtained"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "anxious",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, month=January, year=2026, intent=general_claim_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-2048",
+    "[RESOLVE_INTENT] active case CL-2048 (intent=general_claim_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=next_steps"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "guidance_CL-2048_submission_timing",
+  "category": "guidance",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "resolved to CL-2048"
+   },
+   "reply2_mentions:within a week": {
+    "passed": true,
+    "detail": "expected one of ['within a week', 'a week']"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Chen Margaret, date of birth March 15, 1985, SSN last four 4472. I'm calling about my healthcare claim from January 2026.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. I found a matching healthcare claim: case **CL-2048**, filed on **January 12, 2026**, with a status of **denied**. Can you confirm this is the claim you\u2019re asking about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "Yes.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry\u2014this is frustrating news. Claim CL-2048 was denied because the review file did not include the pathology report and the treating provider\u2019s office note. Please submit both documents through the member portal or claim upload link first if possible; make sure they\u2019re complete and readable, with relevant dates and the provider or facility name visible when available. The appeal deadline was March 18, 2026, and has passed; I don\u2019t have information about late appeals, but a human claims representative can look into that with you. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "When should I submit the documents?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "Please submit the pathology report and office note within a week. Is there anything else you\u2019d like to know about claim CL-2048?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "chen margaret",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": "denied",
+    "month": "January",
+    "year": "2026",
+    "case_id": "CL-2048",
+    "intent": "next_steps",
+    "notes": []
+   },
+   "candidate_case_id": "CL-2048",
+   "active_case_id": "CL-2048",
+   "questions_asked": [
+    "When should I submit the documents?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, month=January, year=2026, intent=general_claim_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-2048",
+    "[RESOLVE_INTENT] remembered status=denied, case_id=CL-2048",
+    "[RESOLVE_INTENT] active case CL-2048 (intent=general_claim_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=next_steps"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "guidance_CL-2048_processing_time_after_submission",
+  "category": "guidance",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "resolved to CL-2048"
+   },
+   "reply2_mentions:less than a week": {
+    "passed": true,
+    "detail": "expected one of ['less than a week', 'week']"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Chen Margaret, date of birth March 15, 1985, SSN last four 4472. I'm calling about my healthcare claim from January 2026.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. I found a matching healthcare claim\u2014case CL-2048\u2014filed January 12, 2026, and its status is denied. Is this the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "Yes.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry\u2014that\u2019s frustrating news. Claim CL-2048 was denied because the review file did not include the pathology report and the treating provider\u2019s office note. The easiest way to submit them is through the member portal or claim upload link; make sure each file is complete and readable, with relevant dates and the provider or facility name visible when available. The appeal deadline was March 18, 2026, and has passed; I don\u2019t have information about late appeals, but a human claims representative can look into that. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "How long does it take after I submit?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "Once the pathology report and office note are received, the review usually restarts rather than finishing instantly. Processing is usually less than a week, although intake and another review cycle may be needed before the status changes. If either file is incomplete or unclear, the team may request more information. Is there anything else you\u2019d like to know about claim CL-2048?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "chen margaret",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": "denied",
+    "month": "January",
+    "year": "2026",
+    "case_id": "CL-2048",
+    "intent": "general_claim_question",
+    "notes": []
+   },
+   "candidate_case_id": "CL-2048",
+   "active_case_id": "CL-2048",
+   "questions_asked": [
+    "How long does processing take after submitting the missing documents?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, month=January, year=2026, intent=general_claim_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-2048",
+    "[RESOLVE_INTENT] remembered status=denied, case_id=CL-2048",
+    "[RESOLVE_INTENT] active case CL-2048 (intent=general_claim_question) -> PROCESS_CASE"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "guidance_CL-2048_submission_method",
+  "category": "guidance",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "resolved to CL-2048"
+   },
+   "reply2_mentions:portal": {
+    "passed": true,
+    "detail": "expected one of ['portal', 'upload link']"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Chen Margaret, date of birth March 15, 1985, SSN last four 4472. I'm calling about my healthcare claim from January 2026.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. I found a matching healthcare claim: case ID CL-2048, filed January 12, 2026, with a status of denied. Is this the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "Yes.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry\u2014that\u2019s frustrating news. Claim CL-2048 was denied because the review file did not include the pathology report and the treating provider\u2019s office note. Please submit both through the member portal or claim upload link first; make sure the files are complete and readable, with claim details, relevant dates, and the provider or facility name visible when available. The appeal deadline was March 18, 2026, and has passed; I don\u2019t have information about late appeals, but a human claims representative can look into that. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "How do I submit the documents?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "The best starting point is usually the member portal or claim upload link, so the pathology report and office note stay attached to claim CL-2048. Make sure each file is complete, legible, and includes the claim details, relevant dates, and provider or facility name when available. If online upload isn\u2019t available, support can help arrange fax or mail handling. Is there anything else about this claim I can help with?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "chen margaret",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": "denied",
+    "month": "January",
+    "year": "2026",
+    "case_id": "CL-2048",
+    "intent": "document_submission",
+    "notes": []
+   },
+   "candidate_case_id": "CL-2048",
+   "active_case_id": "CL-2048",
+   "questions_asked": [
+    "How to submit the required documents"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, month=January, year=2026, intent=general_claim_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-2048",
+    "[RESOLVE_INTENT] remembered status=denied, case_id=CL-2048",
+    "[RESOLVE_INTENT] active case CL-2048 (intent=general_claim_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=document_submission"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "guidance_CL-2048_file_format_requirements",
+  "category": "guidance",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "resolved to CL-2048"
+   },
+   "reply2_mentions:clear": {
+    "passed": true,
+    "detail": "expected one of ['clear', 'complete', 'readable', 'legible', 'pdf']"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Chen Margaret, date of birth March 15, 1985, SSN last four 4472. I'm calling about my healthcare claim from January 2026.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. I found the matching healthcare claim\u2014case CL-2048, filed January 12, 2026, and currently marked denied. Can you confirm this is the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "Yes.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry\u2014that\u2019s frustrating news. The claim was denied because the review file was missing the pathology report and the treating provider\u2019s office note. Please submit both through the member portal or claim upload link if possible; make sure each file is complete and readable, with the relevant dates and provider or facility details visible. The appeal deadline was March 18, 2026, and has passed; I don\u2019t have information about late appeals, but a human claims representative can look into that. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "What file format should the scan be, is a pdf ok?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "Yes\u2014a PDF is acceptable for the office note, with all pages together when possible. For the pathology report, a high-quality scan is acceptable as long as it\u2019s complete and fully readable. Please make sure each file includes the required patient and provider details, dates, and signatures where applicable. Is there anything else about this claim you\u2019d like to ask?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "chen margaret",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": null,
+    "month": "January",
+    "year": "2026",
+    "case_id": null,
+    "intent": "document_submission",
+    "notes": []
+   },
+   "candidate_case_id": "CL-2048",
+   "active_case_id": "CL-2048",
+   "questions_asked": [
+    "What file format should the scan be, and is PDF acceptable?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, month=January, year=2026, intent=general_claim_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-2048",
+    "[RESOLVE_INTENT] active case CL-2048 (intent=general_claim_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=document_submission"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "guidance_CL-2048_receipt_confirmation",
+  "category": "guidance",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "resolved to CL-2048"
+   },
+   "reply2_mentions:business days": {
+    "passed": true,
+    "detail": "expected one of ['business days', 'intake', 'delay']"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Chen Margaret, date of birth March 15, 1985, SSN last four 4472. I'm calling about my healthcare claim from January 2026.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. I found a matching healthcare claim: case ID CL-2048, filed January 12, 2026, with a status of denied. Is this the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "Yes.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry\u2014that\u2019s frustrating news. Claim CL-2048 was denied because the review file did not include the pathology report and the treating provider\u2019s office note. Please submit both through the member portal or claim upload link if possible; make sure the files are complete and readable, and include the claim details and provider or facility name where available. The appeal deadline was March 18, 2026, and has passed; I don\u2019t have information about late appeals, but a human claims representative can look into that. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "How do I know you got it? Will it show up in status?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "It\u2019s understandable to want confirmation that your documents were received. After you upload the pathology report and office note for claim CL-2048, there may be a short intake delay before the status reflects the update. If it still looks unchanged after a few business days, support can check whether both files were attached correctly. Is there anything else about this claim I can clarify?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "chen margaret",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": "denied",
+    "month": "January",
+    "year": "2026",
+    "case_id": "CL-2048",
+    "intent": "status_inquiry",
+    "notes": []
+   },
+   "candidate_case_id": "CL-2048",
+   "active_case_id": "CL-2048",
+   "questions_asked": [
+    "How can I confirm that the submitted documents were received, and will their receipt appear in the claim status?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "anxious",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, month=January, year=2026, intent=general_claim_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-2048",
+    "[RESOLVE_INTENT] remembered status=denied, case_id=CL-2048",
+    "[RESOLVE_INTENT] active case CL-2048 (intent=general_claim_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=status_inquiry"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "claim_CL-2011_overview",
+  "category": "claim_facts",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "resolved to CL-2011"
+   },
+   "reply0_mentions:CL-2011": {
+    "passed": true,
+    "detail": "expected one of ['CL-2011']"
+   },
+   "reply2_mentions:closed": {
+    "passed": true,
+    "detail": "expected one of ['closed']"
+   },
+   "reply2_mentions:780.00": {
+    "passed": true,
+    "detail": "expected one of ['780.00', '780.00', '780']"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Chen Margaret, date of birth March 15, 1985, SSN last four 4472. I'm calling about my healthcare claim from January 2025.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. I found the matching healthcare claim, case ID CL-2011, filed January 28, 2025, and its status is closed. Can you confirm this is the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "Yes, that's the one.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "Your healthcare claim was completed and is closed. It was settled, with $780 paid by the insurance company out of the $800 maximum allowed for the covered service. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "What's the status, and how much was paid or can I expect?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "The claim status is closed. The finalized amount paid by the insurance company was $780, and the expected reimbursement was also $780. Is there anything else you\u2019d like to know about this claim?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "chen margaret",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": "closed",
+    "month": "January",
+    "year": "2025",
+    "case_id": "CL-2011",
+    "intent": "status_inquiry",
+    "notes": []
+   },
+   "candidate_case_id": "CL-2011",
+   "active_case_id": "CL-2011",
+   "questions_asked": [
+    "What is the claim status, and how much was paid or can be expected?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, month=January, year=2025, intent=general_claim_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-2011",
+    "[RESOLVE_INTENT] remembered status=closed, case_id=CL-2011",
+    "[RESOLVE_INTENT] active case CL-2011 (intent=general_claim_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=status_inquiry"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "claim_CL-1899_overview",
+  "category": "claim_facts",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "resolved to CL-1899"
+   },
+   "reply0_mentions:CL-1899": {
+    "passed": true,
+    "detail": "expected one of ['CL-1899']"
+   },
+   "reply2_mentions:closed": {
+    "passed": true,
+    "detail": "expected one of ['closed']"
+   },
+   "reply2_mentions:425.00": {
+    "passed": true,
+    "detail": "expected one of ['425.00', '425.00', '425']"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Chen Margaret, date of birth March 15, 1985, SSN last four 4472. I'm calling about my dental claim from November 2025.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. I found the matching claim: case CL-1899, a dental claim filed on November 3, 2025, and its status is closed. Can you confirm this is the claim you\u2019re asking about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "Yes, that's the one.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "Your dental claim was completed and is closed. The insurance company paid $425, compared with the allowed maximum of $450. What else would you like to know about this claim?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "What's the status, and how much was paid or can I expect?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "The claim is closed. The finalized amount paid was $425, and the expected reimbursement was also $425. Is there anything else you\u2019d like to know about this claim?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "chen margaret",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "dental",
+    "status": "closed",
+    "month": "November",
+    "year": "2025",
+    "case_id": "CL-1899",
+    "intent": "status_inquiry",
+    "notes": []
+   },
+   "candidate_case_id": "CL-1899",
+   "active_case_id": "CL-1899",
+   "questions_asked": [
+    "What is the claim status, and how much was paid or can be expected?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=dental, month=November, year=2025, intent=general_claim_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-1899",
+    "[RESOLVE_INTENT] remembered status=closed, case_id=CL-1899",
+    "[RESOLVE_INTENT] active case CL-1899 (intent=general_claim_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=status_inquiry"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "claim_CL-2102_overview",
+  "category": "claim_facts",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "resolved to CL-2102"
+   },
+   "reply0_mentions:CL-2102": {
+    "passed": true,
+    "detail": "expected one of ['CL-2102']"
+   },
+   "reply2_mentions:open": {
+    "passed": true,
+    "detail": "expected one of ['open', 'open', 'in progress']"
+   },
+   "reply2_mentions:3200.00": {
+    "passed": true,
+    "detail": "expected one of ['3200.00', '3,200']"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Chen Margaret, date of birth March 15, 1985, SSN last four 4472. I'm calling about my auto claim from February 2026.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Margaret. I found a matching auto claim, case ID CL-2102, filed February 28, 2026, with a status of open. Is this the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "Yes, that's the one.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "Your auto claim is still open and in progress. It\u2019s an auto claim, and the expected payment from the insurance company is $3,200. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "What's the status, and how much was paid or can I expect?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "The claim is still open and in progress. The finalized amount paid so far is $0, and the expected payment from the insurance company is $3,200. Is there anything else you\u2019d like to know about this claim?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "chen margaret",
+    "dob": "\u2022\u2022\u202215",
+    "id_last4": "\u2022\u2022\u202272"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "auto",
+    "status": "open",
+    "month": "February",
+    "year": "2026",
+    "case_id": "CL-2102",
+    "intent": "status_inquiry",
+    "notes": []
+   },
+   "candidate_case_id": "CL-2102",
+   "active_case_id": "CL-2102",
+   "questions_asked": [
+    "What is the claim status, and how much has been paid or is expected to be paid?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=auto, month=February, year=2026, intent=general_claim_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P9 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-2102",
+    "[RESOLVE_INTENT] remembered status=open, case_id=CL-2102",
+    "[RESOLVE_INTENT] active case CL-2102 (intent=general_claim_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=status_inquiry"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "claim_CL-3001_overview",
+  "category": "claim_facts",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "resolved to CL-3001"
+   },
+   "reply0_mentions:CL-3001": {
+    "passed": true,
+    "detail": "expected one of ['CL-3001']"
+   },
+   "reply2_mentions:denied": {
+    "passed": true,
+    "detail": "expected one of ['denied']"
+   },
+   "replyany_mentions:diagnosis report": {
+    "passed": true,
+    "detail": "expected one of ['diagnosis report']"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Tian Ma, date of birth September 10, 1964, national ID last four 6688. I'm calling about my healthcare claim from March 2026.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Ma. I found the matching healthcare claim: case ID CL-3001, filed March 1, 2026, with a status of denied. Can you confirm this is the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "Yes, that's the one.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry\u2014that\u2019s frustrating news. Claim CL-3001 was denied because the submitted materials did not include the treating provider\u2019s diagnosis report; the easiest way to submit it is through the member portal or claim upload link, with the file complete and legible and the claim details, relevant dates, and provider or facility name visible. The appeal deadline was April 15, 2026, and has passed; I don\u2019t have information about late appeals, but a human claims representative can look into that with you. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "What's the status, and how much was paid or can I expect?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "The claim status is **denied**. The insurance company paid **$0**, and the expected payment is also **$0**. The file lists **$1,200 as the maximum the insurer would pay for a covered service**, but that is not a payment on this denied claim. Is there anything else about this claim you\u2019d like to know?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "tian ma",
+    "dob": "\u2022\u2022\u202210",
+    "id_last4": "\u2022\u2022\u202288"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P12",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": "denied",
+    "month": "March",
+    "year": "2026",
+    "case_id": "CL-3001",
+    "intent": "status_inquiry",
+    "notes": []
+   },
+   "candidate_case_id": "CL-3001",
+   "active_case_id": "CL-3001",
+   "questions_asked": [
+    "What is the status of the claim, and how much was paid or can be expected?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, month=March, year=2026, intent=general_claim_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P12 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-3001",
+    "[RESOLVE_INTENT] remembered status=denied, case_id=CL-3001",
+    "[RESOLVE_INTENT] active case CL-3001 (intent=general_claim_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=status_inquiry"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "guidance_CL-3001_missing_required_material_alternatives",
+  "category": "guidance",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "resolved to CL-3001"
+   },
+   "reply2_mentions:replacement": {
+    "passed": true,
+    "detail": "expected one of ['replacement', 'copy', 'substitute', 'human']"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Tian Ma, date of birth September 10, 1964, national ID last four 6688. I'm calling about my healthcare claim from March 2026.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Tian. I found the matching claim: case ID **CL-3001**, a healthcare claim filed on **March 1, 2026**, with a status of **denied**. Is this the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "Yes.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry this is frustrating news. The claim was denied because the submitted materials did not include the treating provider\u2019s diagnosis report; please upload a clear, complete copy through the member portal or claim upload link, with the provider or facility name and relevant claim details visible when available. The appeal deadline of April 15, 2026, has passed, and I don\u2019t have information about late appeals, but a human claims representative can look into that\u2014what else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "What if I can't get one of the documents?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "I understand it can be stressful when a required medical record is hard to obtain. If you can\u2019t get the diagnosis report, first request a replacement copy from the treating provider, facility, or lab; if you only have a partial substitute, submit it with a short note explaining what\u2019s still missing. If you can\u2019t obtain the report or a reasonable substitute after checking with them, a human claims representative can review the file with you. Is there anything else about claim CL-3001 you\u2019d like to ask?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "tian ma",
+    "dob": "\u2022\u2022\u202210",
+    "id_last4": "\u2022\u2022\u202288"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P12",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": "denied",
+    "month": "March",
+    "year": "2026",
+    "case_id": "CL-3001",
+    "intent": "next_steps",
+    "notes": []
+   },
+   "candidate_case_id": "CL-3001",
+   "active_case_id": "CL-3001",
+   "questions_asked": [
+    "What should I do if I cannot obtain one of the required documents?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "anxious",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, month=March, year=2026, intent=general_claim_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P12 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-3001",
+    "[RESOLVE_INTENT] remembered status=denied, case_id=CL-3001",
+    "[RESOLVE_INTENT] active case CL-3001 (intent=general_claim_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=next_steps"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "guidance_CL-3001_submission_timing",
+  "category": "guidance",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "resolved to CL-3001"
+   },
+   "reply2_mentions:within a week": {
+    "passed": true,
+    "detail": "expected one of ['within a week', 'a week']"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Tian Ma, date of birth September 10, 1964, national ID last four 6688. I'm calling about my healthcare claim from March 2026.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Ma. I found a matching healthcare claim: case ID CL-3001, filed March 1, 2026, with a status of denied. Is this the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "Yes.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry\u2014this is frustrating news. Claim CL-3001 was denied because the submitted materials didn\u2019t include the treating provider\u2019s diagnosis report. The easiest way to submit it is through the member portal or claim upload link; make sure the file is legible and complete, with the claim details, relevant dates, and provider or facility name visible. The appeal deadline of April 15, 2026, has passed; I don\u2019t have information about late appeals, but a human claims representative can look into that. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "When should I submit the documents?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "Please submit the diagnosis report within a week. Is there anything else you\u2019d like to know about claim CL-3001?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "tian ma",
+    "dob": "\u2022\u2022\u202210",
+    "id_last4": "\u2022\u2022\u202288"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P12",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": null,
+    "month": "March",
+    "year": "2026",
+    "case_id": null,
+    "intent": "next_steps",
+    "notes": []
+   },
+   "candidate_case_id": "CL-3001",
+   "active_case_id": "CL-3001",
+   "questions_asked": [
+    "When should I submit the documents?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, month=March, year=2026, intent=general_claim_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P12 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-3001",
+    "[RESOLVE_INTENT] active case CL-3001 (intent=general_claim_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=next_steps"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "guidance_CL-3001_processing_time_after_submission",
+  "category": "guidance",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "resolved to CL-3001"
+   },
+   "reply2_mentions:less than a week": {
+    "passed": true,
+    "detail": "expected one of ['less than a week', 'week']"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Tian Ma, date of birth September 10, 1964, national ID last four 6688. I'm calling about my healthcare claim from March 2026.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Ma. I found the matching healthcare claim, case ID CL-3001, filed on March 1, 2026. Its status is denied. Can you confirm this is the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "Yes.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry\u2014that\u2019s frustrating news. Claim CL-3001 was denied because the submitted materials didn\u2019t include the treating provider\u2019s diagnosis report. Please submit the diagnosis report through the member portal or claim upload link if possible; make sure it\u2019s legible and complete, with the claim details, relevant dates, and provider or facility name visible where available. The appeal deadline was April 15, 2026, and it has passed; I don\u2019t have information about late appeals, but a human claims representative can look into that. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "How long does it take after I submit?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "Once the diagnosis report is received, the review usually restarts rather than finishing immediately. Processing is usually less than a week, though intake and another review cycle may be needed before the status changes. If the report is incomplete or unclear, the team may request more information. Is there anything else about claim CL-3001 you\u2019d like to ask?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "tian ma",
+    "dob": "\u2022\u2022\u202210",
+    "id_last4": "\u2022\u2022\u202288"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P12",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": "denied",
+    "month": "March",
+    "year": "2026",
+    "case_id": "CL-3001",
+    "intent": "next_steps",
+    "notes": []
+   },
+   "candidate_case_id": "CL-3001",
+   "active_case_id": "CL-3001",
+   "questions_asked": [
+    "How long will processing take after submitting the diagnosis report?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, month=March, year=2026, intent=general_claim_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P12 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-3001",
+    "[RESOLVE_INTENT] remembered status=denied, case_id=CL-3001",
+    "[RESOLVE_INTENT] active case CL-3001 (intent=general_claim_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=next_steps"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "guidance_CL-3001_submission_method",
+  "category": "guidance",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "resolved to CL-3001"
+   },
+   "reply2_mentions:portal": {
+    "passed": true,
+    "detail": "expected one of ['portal', 'upload link']"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Tian Ma, date of birth September 10, 1964, national ID last four 6688. I'm calling about my healthcare claim from March 2026.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Ma. I found the matching healthcare claim: case ID CL-3001, filed March 1, 2026, and its status is denied. Can you confirm this is the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "Yes.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry this is frustrating news. Claim CL-3001 was denied because the submitted materials did not include the treating provider\u2019s diagnosis report. The easiest way to submit it is through the member portal or claim upload link; make sure it\u2019s legible and complete, with the claim details, relevant dates, and provider or facility name visible where available. The appeal deadline was April 15, 2026, and has passed; I don\u2019t have information about late appeals, but a human claims representative can look into that. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "How do I submit the documents?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "For claim CL-3001, the best starting point is the member portal or claim upload link so the diagnosis report stays attached to the file. Make sure the file is clear and complete, with claim-identifying details, relevant dates, and the treating provider or facility name visible when available. If online upload isn\u2019t available, support can help arrange fax or mail handling. Is there anything else you\u2019d like to know about this claim?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "tian ma",
+    "dob": "\u2022\u2022\u202210",
+    "id_last4": "\u2022\u2022\u202288"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P12",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": "denied",
+    "month": "March",
+    "year": "2026",
+    "case_id": "CL-3001",
+    "intent": "document_submission",
+    "notes": []
+   },
+   "candidate_case_id": "CL-3001",
+   "active_case_id": "CL-3001",
+   "questions_asked": [
+    "How do I submit the documents?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, month=March, year=2026, intent=general_claim_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P12 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-3001",
+    "[RESOLVE_INTENT] remembered status=denied, case_id=CL-3001",
+    "[RESOLVE_INTENT] active case CL-3001 (intent=general_claim_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=document_submission"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "guidance_CL-3001_file_format_requirements",
+  "category": "guidance",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "resolved to CL-3001"
+   },
+   "reply2_mentions:clear": {
+    "passed": true,
+    "detail": "expected one of ['clear', 'complete', 'readable', 'legible', 'pdf']"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Tian Ma, date of birth September 10, 1964, national ID last four 6688. I'm calling about my healthcare claim from March 2026.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Ma. I found the matching claim: healthcare case CL-3001, filed March 1, 2026, with a status of denied. Can you confirm this is the claim you\u2019re asking about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "Yes.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry\u2014that\u2019s frustrating news. The claim was denied because the treating provider\u2019s diagnosis report wasn\u2019t included; please submit that report through the member portal or claim upload link when possible, making sure it\u2019s clear, complete, and shows the claim details, relevant dates, and provider or facility name. The appeal deadline of April 15, 2026, has passed; I don\u2019t have information about late appeals, but a human claims representative can look into that. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "What file format should the scan be, is a pdf ok?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "I don\u2019t have a claim-specific file format requirement on file, so I can\u2019t confirm whether PDF is accepted. The diagnosis report should be clear, complete, and easy to review, with the claim details, relevant dates, and provider or facility name visible when applicable. Is there anything else about claim CL-3001 I can help with?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "tian ma",
+    "dob": "\u2022\u2022\u202210",
+    "id_last4": "\u2022\u2022\u202288"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P12",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": null,
+    "month": "March",
+    "year": "2026",
+    "case_id": null,
+    "intent": "document_submission",
+    "notes": []
+   },
+   "candidate_case_id": "CL-3001",
+   "active_case_id": "CL-3001",
+   "questions_asked": [
+    "What file format should the scan be, and is PDF acceptable?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, month=March, year=2026, intent=general_claim_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P12 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-3001",
+    "[RESOLVE_INTENT] active case CL-3001 (intent=general_claim_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=document_submission"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "guidance_CL-3001_receipt_confirmation",
+  "category": "guidance",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "resolved to CL-3001"
+   },
+   "reply2_mentions:business days": {
+    "passed": true,
+    "detail": "expected one of ['business days', 'intake', 'delay']"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, my name is Tian Ma, date of birth September 10, 1964, national ID last four 6688. I'm calling about my healthcare claim from March 2026.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, Ma. I found a matching claim: case ID CL-3001, a healthcare claim filed on March 1, 2026, with a status of denied. Can you confirm this is the claim you\u2019re calling about?",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "caller",
+    "Yes.",
+    "RESOLVE_INTENT",
+    true
+   ],
+   [
+    "agent",
+    "I\u2019m sorry\u2014that\u2019s frustrating news. Claim CL-3001 was denied because the treating provider\u2019s diagnosis report wasn\u2019t included. Please submit the diagnosis report through the member portal or claim upload link if possible; make sure it\u2019s legible and complete, with the claim details, relevant dates, and provider or facility name visible. The appeal deadline was April 15, 2026, and has passed; I don\u2019t have information about late appeals, but a human claims representative can look into that with you. What else would you like to know?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "caller",
+    "How do I know you got it? Will it show up in status?",
+    "PROCESS_CASE",
+    true
+   ],
+   [
+    "agent",
+    "After you upload the missing diagnosis report, there may be a short intake delay before the claim status reflects the update. If the status is still unchanged after a few business days, support can check whether the document was attached correctly to claim CL-3001. Is there anything else about this claim I can help with?",
+    "PROCESS_CASE",
+    true
+   ]
+  ],
+  "final_state": {
+   "phase": "PROCESS_CASE",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "tian ma",
+    "dob": "\u2022\u2022\u202210",
+    "id_last4": "\u2022\u2022\u202288"
+   },
+   "refused_fields": [],
+   "caller_role": "self",
+   "rep_name": null,
+   "rep_relationship": null,
+   "rep_authorized": null,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": true,
+   "party_id": "P12",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": "healthcare",
+    "status": null,
+    "month": "March",
+    "year": "2026",
+    "case_id": null,
+    "intent": "status_inquiry",
+    "notes": []
+   },
+   "candidate_case_id": "CL-3001",
+   "active_case_id": "CL-3001",
+   "questions_asked": [
+    "How can I confirm that the diagnosis report was received, and will its receipt appear in the claim status?"
+   ],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": false,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered case_type=healthcare, month=March, year=2026, intent=general_claim_question",
+    "[VERIFY_ID] received full_name, dob, id_last4",
+    "[VERIFY_ID] verified party P12 -> RESOLVE_INTENT",
+    "[RESOLVE_INTENT] remembered hints matched CL-3001",
+    "[RESOLVE_INTENT] active case CL-3001 (intent=general_claim_question) -> PROCESS_CASE",
+    "[PROCESS_CASE] remembered intent=status_inquiry"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "rep_P9_consent_default",
+  "category": "representative",
+  "passed": false,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": false,
+    "detail": "consent approved -> access"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, I'm David Chen, calling for my mother Margaret Chen.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you, David. To verify Margaret\u2019s information, could you provide two of these details for her: her date of birth, phone number or email on file, or the last four digits of her SSN or national ID?",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "caller",
+    "Her DOB is 1985-03-15, phone +16505212836.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "For privacy, I can only discuss the account with the policyholder or a representative already authorized on the policy, and I don\u2019t see you listed as authorized. Margaret can call directly, or she can add you as an authorized representative. If you need more help with that, I can connect you with a human representative.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "caller",
+    "She approved it.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "I understand. For privacy, I can only discuss the account with Margaret or a representative already authorized on the policy, and I don\u2019t see you listed. Margaret can call directly or add you as an authorized representative. If you need more help with that, I can connect you with a human representative.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "caller",
+    "Check again please.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "I\u2019ve checked, and I still don\u2019t see you listed as an authorized representative. Margaret can call directly or add you as an authorized representative. If you need more help, I can connect you with a human representative.",
+    "VERIFY_ID",
+    false
+   ]
+  ],
+  "final_state": {
+   "phase": "VERIFY_ID",
+   "consent_scenario": "default",
+   "collected": {
+    "full_name": "margaret chen",
+    "dob": "\u2022\u2022\u202215",
+    "phone": "\u2022\u2022\u202236"
+   },
+   "refused_fields": [],
+   "caller_role": "representative",
+   "rep_name": "David",
+   "rep_relationship": "mother",
+   "rep_authorized": false,
+   "consent_status": null,
+   "consent_checks": 0,
+   "verified": false,
+   "party_id": null,
+   "verify_failures": 0,
+   "memory": {
+    "case_type": null,
+    "status": null,
+    "month": null,
+    "year": null,
+    "case_id": null,
+    "intent": null,
+    "notes": [
+     "Margaret approved the caller's authorization."
+    ]
+   },
+   "candidate_case_id": null,
+   "active_case_id": null,
+   "questions_asked": [],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "neutral",
+   "negative_streak": 0,
+   "handoff_offered": true,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] received full_name",
+    "[VERIFY_ID] received dob, phone",
+    "[VERIFY_ID] caller is not an authorized representative",
+    "[VERIFY_ID] remembered note='Margaret approved the caller's authorization.'",
+    "[VERIFY_ID] caller is not an authorized representative",
+    "[VERIFY_ID] caller is not an authorized representative"
+   ]
+  },
+  "outbox": []
+ },
+ {
+  "name": "rep_P9_consent_timeout",
+  "category": "representative",
+  "passed": true,
+  "error": null,
+  "checks": {
+   "no_leak_before_verification": {
+    "passed": true,
+    "detail": "no claim data before verification"
+   },
+   "grounded_numbers": {
+    "passed": true,
+    "detail": "all amounts/dates/case ids grounded"
+   },
+   "expected_outcome": {
+    "passed": true,
+    "detail": "consent timeout -> no access"
+   }
+  },
+  "judge": null,
+  "transcript": [
+   [
+    "caller",
+    "Hi, I'm David Chen, calling for my mother Margaret Chen.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "Thank you for providing your name and relationship. To verify the policyholder, please provide her date of birth and either the phone number or email address on file.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "caller",
+    "Her DOB is 1985-03-15, phone +16505212836.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "You\u2019re listed as an authorized representative. For your mother\u2019s privacy, we also need her consent for this call because it involves her private information; a consent request has just been sent to her phone on file. The request is pending\u2014please let me know once she approves it on her phone so I can check.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "caller",
+    "She approved it.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "I re-checked the consent request, and it still shows as pending. It may take a moment to come through; ask me to check again in a moment.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "caller",
+    "Check again please.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "I re-checked the consent request, and it still shows as pending. It may take a moment to come through; you can ask me to check again in a moment.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "caller",
+    "Again?",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "I know this is confusing. I re-checked the consent request, and it still shows as pending; it may take a moment to come through. Please ask me to check again in a moment.",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "caller",
+    "Anything yet?",
+    "VERIFY_ID",
+    false
+   ],
+   [
+    "agent",
+    "I understand you\u2019re waiting for the consent to come through. It still hasn\u2019t been received, so I can\u2019t share any claim details. Your mother can call in directly, you can try again later, or I can transfer you to a human representative.",
+    "VERIFY_ID",
+    false
+   ]
+  ],
+  "final_state": {
+   "phase": "VERIFY_ID",
+   "consent_scenario": "timeout",
+   "collected": {
+    "full_name": "margaret chen",
+    "dob": "\u2022\u2022\u202215",
+    "phone": "\u2022\u2022\u202236"
+   },
+   "refused_fields": [],
+   "caller_role": "representative",
+   "rep_name": "David Chen",
+   "rep_relationship": "son",
+   "rep_authorized": true,
+   "consent_status": "timeout",
+   "consent_checks": 5,
+   "verified": false,
+   "party_id": "P9",
+   "verify_failures": 0,
+   "memory": {
+    "case_type": null,
+    "status": null,
+    "month": null,
+    "year": null,
+    "case_id": null,
+    "intent": "status_inquiry",
+    "notes": [
+     "Calling on behalf of his mother",
+     "Mother approved the consent request."
+    ]
+   },
+   "candidate_case_id": null,
+   "active_case_id": null,
+   "questions_asked": [],
+   "off_topic_strikes": 0,
+   "persuasion_attempts": 0,
+   "last_emotion": "confused",
+   "negative_streak": 0,
+   "handoff_offered": true,
+   "handoff_reason": null,
+   "email_offered": false,
+   "email_choice": null,
+   "email_pref": null,
+   "pending_handoff": null,
+   "events": [
+    "[VERIFY_ID] remembered note='Calling on behalf of his mother'",
+    "[VERIFY_ID] received full_name",
+    "[VERIFY_ID] received dob, phone",
+    "[VERIFY_ID] authorized representative; consent request sent to policyholder",
+    "[VERIFY_ID] consent check #1: pending",
+    "[VERIFY_ID] remembered note='Mother approved the consent request.'",
+    "[VERIFY_ID] consent check #2: pending",
+    "[VERIFY_ID] remembered intent=general_claim_question",
+    "[VERIFY_ID] consent check #3: pending",
+    "[VERIFY_ID] consent check #4: pending",
+    "[VERIFY_ID] remembered intent=status_inquiry",
+    "[VERIFY_ID] consent check #5: pending"
+   ]
+  },
+  "outbox": []
+ }
+]
